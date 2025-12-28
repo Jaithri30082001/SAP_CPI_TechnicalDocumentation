@@ -1,0 +1,652 @@
+{
+  "bpmn2:definitions": {
+    "xmlns:bpmn2": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+    "xmlns:bpmndi": "http://www.omg.org/spec/BPMN/20100524/DI",
+    "xmlns:dc": "http://www.omg.org/spec/DD/20100524/DC",
+    "xmlns:di": "http://www.omg.org/spec/DD/20100524/DI",
+    "xmlns:ifl": "http:///com.sap.ifl.model/Ifl.xsd",
+    "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+    "id": "Definitions_1",
+    "bpmn2:collaboration": {
+      "id": "Collaboration_1",
+      "name": "Default Collaboration",
+      "bpmn2:extensionElements": {
+        "ifl:property": [
+          {
+            "key": "namespaceMapping",
+            "value": ""
+          },
+          {
+            "key": "httpSessionHandling",
+            "value": "None"
+          },
+          {
+            "key": "accessControlMaxAge",
+            "value": ""
+          },
+          {
+            "key": "returnExceptionToSender",
+            "value": "false"
+          },
+          {
+            "key": "log",
+            "value": "All events"
+          },
+          {
+            "key": "corsEnabled",
+            "value": "false"
+          },
+          {
+            "key": "exposedHeaders",
+            "value": ""
+          },
+          {
+            "key": "componentVersion",
+            "value": "1.2"
+          },
+          {
+            "key": "allowedHeaderList",
+            "value": ""
+          },
+          {
+            "key": "ServerTrace",
+            "value": "false"
+          },
+          {
+            "key": "allowedOrigins",
+            "value": ""
+          },
+          {
+            "key": "accessControlAllowCredentials",
+            "value": "false"
+          },
+          {
+            "key": "allowedHeaders",
+            "value": ""
+          },
+          {
+            "key": "allowedMethods",
+            "value": ""
+          },
+          {
+            "key": "cmdVariantUri",
+            "value": "ctype::IFlowVariant/cname::IFlowConfiguration/version::1.2.4"
+          }
+        ]
+      },
+      "bpmn2:participant": [
+        {
+          "id": "Participant_1",
+          "ifl:type": "EndpointSender",
+          "name": "Sender",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "enableBasicAuthentication",
+                "value": "false"
+              },
+              {
+                "key": "ifl:type",
+                "value": "EndpointSender"
+              }
+            ]
+          }
+        },
+        {
+          "id": "Participant_2",
+          "ifl:type": "EndpointRecevier",
+          "name": "Receiver",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_Process_1",
+          "ifl:type": "IntegrationProcess",
+          "name": "Integration Process",
+          "processRef": "Process_1",
+          "bpmn2:extensionElements": ""
+        }
+      ],
+      "bpmn2:messageFlow": [
+        {
+          "id": "MessageFlow_5",
+          "name": "HTTPS",
+          "sourceRef": "Participant_1",
+          "targetRef": "StartEvent_2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "ComponentType",
+                "value": "HTTPS"
+              },
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "maximumBodySize",
+                "value": "40"
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.5"
+              },
+              {
+                "key": "urlPath",
+                "value": "/postman_test"
+              },
+              {
+                "key": "Name",
+                "value": "HTTPS"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.5.2"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "system",
+                "value": "Sender"
+              },
+              {
+                "key": "xsrfProtection",
+                "value": "0"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "HTTPS"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:HTTPS/tp::HTTPS/mp::None/direction::Sender/version::1.5.2"
+              },
+              {
+                "key": "userRole",
+                "value": "ESBMessaging.send"
+              },
+              {
+                "key": "senderAuthType",
+                "value": "RoleBased"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "None"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.5.2"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.5.2"
+              },
+              {
+                "key": "direction",
+                "value": "Sender"
+              },
+              {
+                "key": "clientCertificates",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_4",
+          "name": "Mail",
+          "sourceRef": "EndEvent_2",
+          "targetRef": "Participant_2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "server",
+                "value": "smtp.gmail.com:587"
+              },
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "bcc",
+                "value": ""
+              },
+              {
+                "key": "attachments",
+                "value": ""
+              },
+              {
+                "key": "auth",
+                "value": "loginPlain"
+              },
+              {
+                "key": "subject",
+                "value": "whatever"
+              },
+              {
+                "key": "encrypt.smime.aes.keysize",
+                "value": "128"
+              },
+              {
+                "key": "ComponentNS",
+                "value": "com.sap.it.ide.mail.ui.namespace2"
+              },
+              {
+                "key": "keep_attachments",
+                "value": "0"
+              },
+              {
+                "key": "body",
+                "value": "${in.body}"
+              },
+              {
+                "key": "ssl",
+                "value": "starttls_mandatory"
+              },
+              {
+                "key": "timeout",
+                "value": "30000"
+              },
+              {
+                "key": "Name",
+                "value": "Mail"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "com.sap.it.ide.mail.ui.archive2"
+              },
+              {
+                "key": "proxyPort",
+                "value": "8080"
+              },
+              {
+                "key": "encrypt.smime.des.keysize",
+                "value": "128"
+              },
+              {
+                "key": "content_type",
+                "value": "text/plain"
+              },
+              {
+                "key": "locationId",
+                "value": ""
+              },
+              {
+                "key": "encrypt.smime.algorithm",
+                "value": "aes"
+              },
+              {
+                "key": "signature.smime.table",
+                "value": ""
+              },
+              {
+                "key": "from",
+                "value": "projectcpitd@gmail.com"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "None"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "com.sap.it.ide.mail.ui.archive2"
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              },
+              {
+                "key": "cc",
+                "value": ""
+              },
+              {
+                "key": "attachmentTransferEncoding",
+                "value": "auto"
+              },
+              {
+                "key": "encrypt.smime.aes.gcm.keysize",
+                "value": "128"
+              },
+              {
+                "key": "ComponentType",
+                "value": "Mail"
+              },
+              {
+                "key": "proxyProtocol",
+                "value": "socks5"
+              },
+              {
+                "key": "content_encoding",
+                "value": "UTF-8"
+              },
+              {
+                "key": "proxyType",
+                "value": "none"
+              },
+              {
+                "key": "proxyAlias",
+                "value": ""
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.12"
+              },
+              {
+                "key": "proxyHost",
+                "value": ""
+              },
+              {
+                "key": "system",
+                "value": "Receiver"
+              },
+              {
+                "key": "signature.smime.clearText",
+                "value": "1"
+              },
+              {
+                "key": "encrypt.type",
+                "value": "none"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "SMTP"
+              },
+              {
+                "key": "tokenCredential",
+                "value": ""
+              },
+              {
+                "key": "to",
+                "value": "kjaithrimanogyna@gmail.com"
+              },
+              {
+                "key": "encrypt.smime.keys",
+                "value": ""
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:Mail/tp::SMTP/mp::None/direction::Receiver/version::1.12.0"
+              },
+              {
+                "key": "user",
+                "value": "gmail_user"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.0"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "bpmn2:process": {
+      "id": "Process_1",
+      "name": "Integration Process",
+      "bpmn2:extensionElements": {
+        "ifl:property": [
+          {
+            "key": "transactionTimeout",
+            "value": "30"
+          },
+          {
+            "key": "componentVersion",
+            "value": "1.2"
+          },
+          {
+            "key": "cmdVariantUri",
+            "value": "ctype::FlowElementVariant/cname::IntegrationProcess/version::1.2.1"
+          },
+          {
+            "key": "transactionalHandling",
+            "value": "Not Required"
+          }
+        ]
+      },
+      "bpmn2:endEvent": {
+        "id": "EndEvent_2",
+        "name": "End",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "componentVersion",
+              "value": "1.1"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowstepVariant/cname::MessageEndEvent/version::1.1.0"
+            }
+          ]
+        },
+        "bpmn2:incoming": "SequenceFlow_7",
+        "bpmn2:messageEventDefinition": ""
+      },
+      "bpmn2:callActivity": {
+        "id": "CallActivity_6",
+        "name": "Content Modifier 1",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "bodyType",
+              "value": "constant"
+            },
+            {
+              "key": "propertyTable",
+              "value": ""
+            },
+            {
+              "key": "headerTable",
+              "value": ""
+            },
+            {
+              "key": "wrapContent",
+              "value": "this is the sample text present in this integration flow - CPI_TD_sample1"
+            },
+            {
+              "key": "componentVersion",
+              "value": "1.6"
+            },
+            {
+              "key": "activityType",
+              "value": "Enricher"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowstepVariant/cname::Enricher/version::1.6.1"
+            }
+          ]
+        },
+        "bpmn2:incoming": "SequenceFlow_3",
+        "bpmn2:outgoing": "SequenceFlow_7"
+      },
+      "bpmn2:startEvent": {
+        "id": "StartEvent_2",
+        "name": "Start",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "componentVersion",
+              "value": "1.0"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowstepVariant/cname::MessageStartEvent/version::1.0"
+            }
+          ]
+        },
+        "bpmn2:outgoing": "SequenceFlow_3",
+        "bpmn2:messageEventDefinition": ""
+      },
+      "bpmn2:sequenceFlow": [
+        {
+          "id": "SequenceFlow_7",
+          "sourceRef": "CallActivity_6",
+          "targetRef": "EndEvent_2"
+        },
+        {
+          "id": "SequenceFlow_3",
+          "sourceRef": "StartEvent_2",
+          "targetRef": "CallActivity_6"
+        }
+      ]
+    },
+    "bpmndi:BPMNDiagram": {
+      "id": "BPMNDiagram_1",
+      "name": "Default Collaboration Diagram",
+      "bpmndi:BPMNPlane": {
+        "bpmnElement": "Collaboration_1",
+        "id": "BPMNPlane_1",
+        "bpmndi:BPMNShape": [
+          {
+            "bpmnElement": "EndEvent_2",
+            "id": "BPMNShape_EndEvent_2",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "703.0",
+              "y": "142.0"
+            }
+          },
+          {
+            "bpmnElement": "StartEvent_2",
+            "id": "BPMNShape_StartEvent_2",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "292.0",
+              "y": "142.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_6",
+            "id": "BPMNShape_CallActivity_6",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "464.0",
+              "y": "128.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_2",
+            "id": "BPMNShape_Participant_2",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "900.0",
+              "y": "100.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_1",
+            "id": "BPMNShape_Participant_1",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "40.0",
+              "y": "100.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_Process_1",
+            "id": "BPMNShape_Participant_Process_1",
+            "dc:Bounds": {
+              "height": "220.0",
+              "width": "569.0",
+              "x": "250.0",
+              "y": "60.0"
+            }
+          }
+        ],
+        "bpmndi:BPMNEdge": [
+          {
+            "bpmnElement": "SequenceFlow_7",
+            "id": "BPMNEdge_SequenceFlow_7",
+            "sourceElement": "BPMNShape_CallActivity_6",
+            "targetElement": "BPMNShape_EndEvent_2",
+            "di:waypoint": [
+              {
+                "x": "514.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              },
+              {
+                "x": "719.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_3",
+            "id": "BPMNEdge_SequenceFlow_3",
+            "sourceElement": "BPMNShape_StartEvent_2",
+            "targetElement": "BPMNShape_CallActivity_6",
+            "di:waypoint": [
+              {
+                "x": "308.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              },
+              {
+                "x": "514.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_5",
+            "id": "BPMNEdge_MessageFlow_5",
+            "sourceElement": "BPMNShape_Participant_1",
+            "targetElement": "BPMNShape_StartEvent_2",
+            "di:waypoint": [
+              {
+                "x": "90.0",
+                "xsi:type": "dc:Point",
+                "y": "170.0"
+              },
+              {
+                "x": "308.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_4",
+            "id": "BPMNEdge_MessageFlow_4",
+            "sourceElement": "BPMNShape_EndEvent_2",
+            "targetElement": "BPMNShape_Participant_2",
+            "di:waypoint": [
+              {
+                "x": "719.0",
+                "xsi:type": "dc:Point",
+                "y": "158.0"
+              },
+              {
+                "x": "950.0",
+                "xsi:type": "dc:Point",
+                "y": "170.0"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
