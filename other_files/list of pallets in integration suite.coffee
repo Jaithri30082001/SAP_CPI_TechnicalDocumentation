@@ -1,0 +1,87 @@
+list of pallets in integration suite
+->Participants 
+            -> receiver
+            -> sender
+->Process   
+            -> exception subprocess
+            -> integration process 
+            -> local integration process
+->Event 
+            ->End Event, End Message
+            ->Error End Event, Error start Event
+            ->Escalation End Event
+            ->Start Event, Start Message
+            ->Terminate Message, Timer
+->Mapping            
+            ->ID Mapping
+            ->Message Mapping
+            ->Operation Mapping
+            ->XSLT Mapping
+->Transformation
+            ->Content modifier
+            ->Converter ->CSV to XML Converter
+                        ->EDI to XML Converter
+                        ->JSON to XML Converter
+                        ->XML to CSV Converter
+                        ->XML to EDI Converter
+                        ->XML to JSON Converter
+            ->Decoder   ->Base64 Decoder
+                        ->GZIP Decompression
+                        ->MIME Multipart Decoder
+                        ->ZIP Decompression
+            ->Encoder   ->Base64 Decoder
+                        ->GZIP Decompression
+                        ->MIME Multipart Decoder
+                        ->ZIP Decompression
+            ->EDI Extractor
+            ->Filter
+            ->Message Digest
+            ->Script    ->Groovy Script
+                        ->JavaScript
+            ->XML Modifier
+->Calls
+            ->External calls    ->Content Enricher
+                                ->Poll Enrich
+                                ->Request Reply
+                                ->Send
+            ->Local calls       ->Idempotent process call
+                                ->Looping process call
+                                ->Process call    
+->Routing           
+            ->Aggregator
+            ->Gather
+            ->Join
+            ->Multicast ->Parallel 
+                        ->Sequential
+            ->Router
+            ->Splitter  ->EDI
+                        ->General
+                        ->IDOC
+                        ->Iterating
+                        ->Tar
+                        ->Zip
+->Security            
+            ->Decryptor -> PGP
+                        ->PKCS7
+            ->Encryptor ->PGP
+                        ->PKCS7
+            ->Signer    ->PKCS7
+                        ->Simple
+                        ->XML Digital
+            ->Verifier  ->PKCS7
+                        ->XML
+->Persistence
+            ->Data Store Operations
+                                ->Delete
+                                ->Get
+                                ->Select
+                                ->Write
+                            ->Persist
+                            ->Write Variables
+->Validator
+            ->EDI Validator
+            ->XML Validator
+
+
+
+                
