@@ -1,13 +1,18 @@
+const { extractActivityConfig } = require("./activityConfig");
+const { generateDocumentation } = require("./docGenerator");
+const { extractActivitySemantics } = require("./activitySemantics");
+
 // import node.js file system, path, xml2js module
 const fs = require("fs");
 const path = require("path");
 const { start } = require("repl");
-const xml2js = require("xml2js"); // translator between CPI BPMN XML and the JSON we are going to work with
+const xml2js = require("xml2js");
 
 const iflwPath = path.join(
   __dirname,
-  "../CPI_TD_sample_1/src/main/resources/scenarioflows/integrationflow/CPI_TD_sample_1.iflw"
-); // the path might be wrong and it should be changed to something dynamic
+  "../sample_files/src/main/resources/scenarioflows/integrationflow/Create Customer Return in Backend from SAP Complaint Handling.iflw"
+);
+
 if (!fs.existsSync(iflwPath)) {
   console.error("iFlow file not found at: ", iflwPath);
   process.exit(1);
@@ -20,34 +25,67 @@ const parser = new xml2js.Parser({
 
 // function extractActivityConfig
 
-function extractActivityConfig(activity) {
-  const extensionProps =
-    activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
+// // function extractActivityConfig(activity) {
+//   const extensionProps =
+//     activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
 
-  const propsArray = Array.isArray(extensionProps)
-    ? extensionProps
-    : [extensionProps];
+//   const propsArray = Array.isArray(extensionProps)
+//     ? extensionProps
+//     : [extensionProps];
 
-  const config = {
-    headers: {},
-    properties: {},
-    wrapContent: false,
-  };
+//   const config = {
+//     headers: {},
+//     properties: {},
+//     wrapContent: false,
+//   };
 
-  propsArray.forEach((p) => {
-    if (!p.key) return;
+//   propsArray.forEach((p) => {
+//     if (!p.key) return;
 
-    if (p.key.startsWith("header.")) {
-      config.headers[p.key.replace("header.", "")] = p.value;
-    } else if (p.key.startsWith("property.")) {
-      config.properties[p.key.replace("property.", "")] = p.value;
-    } else if (p.key === "wrapContent") {
-      config.wrapContent = p.value === "true";
-    }
-  });
+//     if (p.key.startsWith("header.")) {
+//       config.headers[p.key.replace("header.", "")] = p.value;
+//     } else if (p.key.startsWith("property.")) {
+//       config.properties[p.key.replace("property.", "")] = p.value;
+//     } else if (p.key === "wrapContent") {
+//       config.wrapContent = p.value === "true";
+//     }
+//   });
 
-  return config;
-}
+//   return config;
+// }
+
+// function generateDocumentation(docModel)
+// function generateDocumentation(docModel) {
+//   console.log("\n================================================");
+//   console.log("Integration Flow Documentation");
+//   console.log("==================================================");
+
+//   console.log(`iFlow Name: ${docModel.metadata.iflowName}`);
+//   console.log(`Generated At: ${docModel.metadata.generatedAt}\n`);
+
+//   console.log("Participants: ");
+//   docModel.participants.forEach((p) => {
+//     console.log(`- ${p.name}`);
+//   });
+
+//   console.log("\nMessage Flows: ");
+//   docModel.messageFlows.forEach((f) => {
+//     console.log(`- ${f.source} -> ${f.target} (Adapter: ${f.adapterType})`);
+//   });
+
+//   console.log("\nIntegration Steps: ");
+//   docModel.integrationSteps.forEach((step) => {
+//     console.log(`${step.order}. ${step.type} - ${step.name}`);
+
+//     if (step.semantic?.summary?.length) {
+//       step.semantic.summary.forEach((s) => {
+//         console.log(`   ↳ ${s}`);
+//       });
+//     }
+//   });
+
+//   console.log("\n==============================================\n");
+// }
 
 // Parse XML
 parser.parseString(xmlData, (err, result) => {
@@ -161,23 +199,111 @@ parser.parseString(xmlData, (err, result) => {
   acts.forEach((activity) => {
     const step = stepMap[activity.id];
     if (!step) return;
+    // extract semantic meaning
 
+    // const { type, semantic } = extractActivitySemantics(activity);
+    // step.activityType = type;
+    // step.semantic = semantic;
+
+    const semantics = extractActivitySemantics(activity);
+    step.activityType = semantics.type;
+    step.semantic = semantics.semantic;
     step.config = extractActivityConfig(activity);
   });
 
-  let current = starts[0].id;
+  // create the documentationModel Skeleton
+  const documentationModel = {
+    metadata: {
+      iflowName: path.basename(iflwPath),
+      generatedAt: new Date().toISOString(),
+    },
+    participants: [],
+    messageFlows: [],
+    integrationSteps: [],
+  };
 
-  console.log("\nIntegration steps: ");
+  documentationModel.participants = participants.map((p) => ({
+    id: p.id,
+    name: p.name || "N/A",
+  }));
+
+  documentationModel.messageFlows = messageFlows.map((flow) => {
+    const source = participantMap[flow.sourceRef] || flow.sourceRef;
+    const target = participantMap[flow.targetRef] || flow.targetRef;
+
+    const properties = flow["bpmn2:extensionElements"]?.["ifl:property"] || [];
+    const propsArray = Array.isArray(properties) ? properties : [properties];
+
+    const adapterProps = {};
+    propsArray.forEach((p) => {
+      adapterProps[p.key] = p.value;
+    });
+
+    return {
+      source,
+      target,
+      adapterType: adapterProps.ComponentType || "Unknown",
+    };
+  });
+
+  // find all targets
+  const allTargets = new Set(flows.map((f) => f.targetRef));
+
+  // a start node is something that is never a target
+  const startNode = flows.find((f) => !allTargets.has(f.sourceRef))?.sourceRef;
+
+  if (!startNode) {
+    console.warn("⚠️ Could not determine start node from sequence flows.");
+    // return;
+    // continue anyway - unordered documentation is better than none
+  }
+
+  // let current = startNode;
+
+  // let stepNumber = 1;
+
+  // while (current) {
+  //   const step = stepMap[current];
+  //   if (!step) break;
+
+  //   documentationModel.integrationSteps.push({
+  //     order: stepNumber,
+  //     type: step.type,
+  //     name: step.name,
+  //     activityType: step.activityType,
+  //     config: step.config || {},
+  //     semantic: step.semantic || {},
+  //   });
+
+  //   stepNumber++;
+
+  //   const nextFlow = flows.find((f) => f.sourceRef === current);
+  //   current = nextFlow ? nextFlow.targetRef : null;
+  // }
 
   let stepNumber = 1;
-  while (current) {
-    const step = stepMap[current];
-    if (!step) break;
 
-    console.log(`${stepNumber}. ${step.type} - ${step.name}`);
-    stepNumber++;
+  Object.values(stepMap)
+    .filter((step) => step.type === "Activity")
+    .forEach((step) => {
+      documentationModel.integrationSteps.push({
+        order: stepNumber++,
+        type: step.activityType,
+        name: step.name,
+        config: step.config || {},
+        semantic: step.semantic || {},
+      });
+    });
 
-    const nextFlow = flows.find((f) => f.sourceRef === current);
-    current = nextFlow ? nextFlow.targetRef : null;
-  }
+  // console.log(
+  //   "\nDocumentation Model:\n",
+  //   JSON.stringify(documentationModel, null, 2)
+  // );
+
+  // generateDocumentation(documentationModel);
+
+  generateDocumentation(documentationModel, {
+    outputFormat: "markdown",
+    outputDir: path.join(__dirname, "../output2"),
+  });
 });
