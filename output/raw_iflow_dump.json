@@ -1,0 +1,2943 @@
+{
+  "bpmn2:definitions": {
+    "xmlns:bpmn2": "http://www.omg.org/spec/BPMN/20100524/MODEL",
+    "xmlns:bpmndi": "http://www.omg.org/spec/BPMN/20100524/DI",
+    "xmlns:dc": "http://www.omg.org/spec/DD/20100524/DC",
+    "xmlns:di": "http://www.omg.org/spec/DD/20100524/DI",
+    "xmlns:ifl": "http:///com.sap.ifl.model/Ifl.xsd",
+    "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+    "id": "Definitions_1",
+    "bpmn2:collaboration": {
+      "id": "Collaboration_1",
+      "name": "Default Collaboration",
+      "bpmn2:extensionElements": {
+        "ifl:property": [
+          {
+            "key": "namespaceMapping",
+            "value": ""
+          },
+          {
+            "key": "httpSessionHandling",
+            "value": "None"
+          },
+          {
+            "key": "accessControlMaxAge",
+            "value": ""
+          },
+          {
+            "key": "returnExceptionToSender",
+            "value": "false"
+          },
+          {
+            "key": "log",
+            "value": "All events"
+          },
+          {
+            "key": "corsEnabled",
+            "value": ""
+          },
+          {
+            "key": "exposedHeaders",
+            "value": ""
+          },
+          {
+            "key": "componentVersion",
+            "value": "1.2"
+          },
+          {
+            "key": "allowedHeaderList",
+            "value": "constant|destination|language|useExternalDocument"
+          },
+          {
+            "key": "ServerTrace",
+            "value": "false"
+          },
+          {
+            "key": "allowedOrigins",
+            "value": ""
+          },
+          {
+            "key": "accessControlAllowCredentials",
+            "value": ""
+          },
+          {
+            "key": "allowedHeaders",
+            "value": ""
+          },
+          {
+            "key": "allowedMethods",
+            "value": ""
+          },
+          {
+            "key": "cmdVariantUri",
+            "value": "ctype::IFlowVariant/cname::IFlowConfiguration/version::1.2.1"
+          }
+        ]
+      },
+      "bpmn2:participant": [
+        {
+          "id": "Participant_1",
+          "ifl:type": "EndpointSender",
+          "name": "Sender",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "enableBasicAuthentication",
+                "value": "false"
+              },
+              {
+                "key": "ifl:type",
+                "value": "EndpointSender"
+              }
+            ]
+          }
+        },
+        {
+          "id": "Participant_2",
+          "ifl:type": "EndpointRecevier",
+          "name": "Receiver",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_53",
+          "ifl:type": "EndpointRecevier",
+          "name": "DestinationService",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_75",
+          "ifl:type": "EndpointRecevier",
+          "name": "PostExitReceiver",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_83",
+          "ifl:type": "EndpointRecevier",
+          "name": "GetCount",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_106",
+          "ifl:type": "EndpointRecevier",
+          "name": "ExternalDocumentExit",
+          "bpmn2:extensionElements": {
+            "ifl:property": {
+              "key": "ifl:type",
+              "value": "EndpointRecevier"
+            }
+          }
+        },
+        {
+          "id": "Participant_Process_99",
+          "ifl:type": "IntegrationProcess",
+          "name": "Integration to External Service",
+          "processRef": "Process_99",
+          "bpmn2:extensionElements": ""
+        },
+        {
+          "id": "Participant_Process_68",
+          "ifl:type": "IntegrationProcess",
+          "name": "Local Integration Process Post",
+          "processRef": "Process_68",
+          "bpmn2:extensionElements": ""
+        },
+        {
+          "id": "Participant_Process_1",
+          "ifl:type": "IntegrationProcess",
+          "name": "Integration Process",
+          "processRef": "Process_1",
+          "bpmn2:extensionElements": ""
+        }
+      ],
+      "bpmn2:messageFlow": [
+        {
+          "id": "MessageFlow_107",
+          "name": "ProcessDirect",
+          "sourceRef": "ServiceTask_103",
+          "targetRef": "Participant_106",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "ComponentType",
+                "value": "ProcessDirect"
+              },
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "address",
+                "value": "{{callExternalService}}"
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "Vendor",
+                "value": "SAP"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "Name",
+                "value": "ProcessDirect"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.1.2"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "system",
+                "value": "ExternalDocumentExit"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "Not Applicable"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::ProcessDirect/vendor::SAP/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.0.3"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "Not Applicable"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.1.2"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.1.2"
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_84",
+          "name": "HTTP",
+          "sourceRef": "ServiceTask_77",
+          "targetRef": "Participant_83",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "methodSourceExpression",
+                "value": ""
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "privateKeyAlias",
+                "value": ""
+              },
+              {
+                "key": "httpMethod",
+                "value": "GET"
+              },
+              {
+                "key": "allowedResponseHeaders",
+                "value": "*"
+              },
+              {
+                "key": "Name",
+                "value": "HTTP"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.13.2"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "proxyPort",
+                "value": ""
+              },
+              {
+                "key": "httpAddressQuery",
+                "value": "${property.client}&${property.filter}"
+              },
+              {
+                "key": "httpRequestTimeout",
+                "value": "60000"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "None"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.13.2"
+              },
+              {
+                "key": "allowedRequestHeaders",
+                "value": ""
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              },
+              {
+                "key": "ComponentType",
+                "value": "HTTP"
+              },
+              {
+                "key": "httpShouldSendBody",
+                "value": "false"
+              },
+              {
+                "key": "throwExceptionOnFailure",
+                "value": "true"
+              },
+              {
+                "key": "proxyType",
+                "value": "sapcc"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.13"
+              },
+              {
+                "key": "proxyHost",
+                "value": ""
+              },
+              {
+                "key": "system",
+                "value": "GetCount"
+              },
+              {
+                "key": "authenticationMethod",
+                "value": "{{Authentication}}"
+              },
+              {
+                "key": "locationID",
+                "value": "${property.CloudConnectorLocationId}"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "HTTP"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.13.2"
+              },
+              {
+                "key": "credentialName",
+                "value": "{{Credential Name}}"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.13.2"
+              },
+              {
+                "key": "httpAddressWithoutQuery",
+                "value": "${property.EndpointURL}/sap/opu/odata/sap/API_BILLING_DOCUMENT_SRV/A_BillingDocumentItem/$count"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_54",
+          "name": "HTTP",
+          "sourceRef": "ServiceTask_52",
+          "targetRef": "Participant_53",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "methodSourceExpression",
+                "value": ""
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "privateKeyAlias",
+                "value": ""
+              },
+              {
+                "key": "httpMethod",
+                "value": "GET"
+              },
+              {
+                "key": "allowedResponseHeaders",
+                "value": "*"
+              },
+              {
+                "key": "Name",
+                "value": "HTTP"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.11.0"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "proxyPort",
+                "value": ""
+              },
+              {
+                "key": "httpAddressQuery",
+                "value": ""
+              },
+              {
+                "key": "httpRequestTimeout",
+                "value": "60000"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "None"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.11.0"
+              },
+              {
+                "key": "allowedRequestHeaders",
+                "value": ""
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              },
+              {
+                "key": "ComponentType",
+                "value": "HTTP"
+              },
+              {
+                "key": "httpShouldSendBody",
+                "value": "false"
+              },
+              {
+                "key": "throwExceptionOnFailure",
+                "value": "true"
+              },
+              {
+                "key": "proxyType",
+                "value": "default"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.11"
+              },
+              {
+                "key": "proxyHost",
+                "value": ""
+              },
+              {
+                "key": "system",
+                "value": "DestinationService"
+              },
+              {
+                "key": "authenticationMethod",
+                "value": "OAuth2 Client Credentials"
+              },
+              {
+                "key": "locationID",
+                "value": ""
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "HTTP"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.11.0"
+              },
+              {
+                "key": "credentialName",
+                "value": "{{Destination Credential}}"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.11.0"
+              },
+              {
+                "key": "httpAddressWithoutQuery",
+                "value": "{{Destination Address}}/${header.destination}"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_76",
+          "name": "ProcessDirect",
+          "sourceRef": "ServiceTask_72",
+          "targetRef": "Participant_75",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "ComponentType",
+                "value": "ProcessDirect"
+              },
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "address",
+                "value": "/{{postCall}}"
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "Vendor",
+                "value": "SAP"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.1"
+              },
+              {
+                "key": "Name",
+                "value": "ProcessDirect"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.1.2"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "system",
+                "value": "PostExitReceiver"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "Not Applicable"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::ProcessDirect/vendor::SAP/tp::Not Applicable/mp::Not Applicable/direction::Receiver/version::1.1.1"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "Not Applicable"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.1.2"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.1.2"
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_30",
+          "name": "OData",
+          "sourceRef": "ServiceTask_27",
+          "targetRef": "Participant_2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "pagination",
+                "value": "0"
+              },
+              {
+                "key": "odataCertAuthPrivateKeyAlias",
+                "value": ""
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "resourcePath",
+                "value": "A_BillingDocumentItem"
+              },
+              {
+                "key": "customQueryOptions",
+                "value": "${property.client}&${header.language}"
+              },
+              {
+                "key": "metadataAllowedURIParams",
+                "value": ""
+              },
+              {
+                "key": "Name",
+                "value": "OData"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.20.0"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "proxyPort",
+                "value": ""
+              },
+              {
+                "key": "receiveTimeOut",
+                "value": "2"
+              },
+              {
+                "key": "alias",
+                "value": "{{Credential}}"
+              },
+              {
+                "key": "contentType",
+                "value": "application/atom+xml"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "OData V2"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.20.0"
+              },
+              {
+                "key": "direction",
+                "value": "Receiver"
+              },
+              {
+                "key": "scc_location_id",
+                "value": "${property.CloudConnectorLocationId}"
+              },
+              {
+                "key": "metadataAllowedHeaders",
+                "value": ""
+              },
+              {
+                "key": "ComponentType",
+                "value": "HCIOData"
+              },
+              {
+                "key": "address",
+                "value": "${property.EndpointURL}/sap/opu/odata/sap/API_BILLING_DOCUMENT_SRV"
+              },
+              {
+                "key": "queryOptions",
+                "value": "${header.constant}"
+              },
+              {
+                "key": "proxyType",
+                "value": "sapcc"
+              },
+              {
+                "key": "isCSRFEnabled",
+                "value": "true"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.20"
+              },
+              {
+                "key": "proxyHost",
+                "value": ""
+              },
+              {
+                "key": "edmxFilePath",
+                "value": "edmx/API_BILLING_DOCUMENT_SRV.edmx"
+              },
+              {
+                "key": "odatapagesize",
+                "value": ""
+              },
+              {
+                "key": "system",
+                "value": "Receiver"
+              },
+              {
+                "key": "authenticationMethod",
+                "value": "{{Authentication type}}"
+              },
+              {
+                "key": "whitelistResponseHeaders",
+                "value": ""
+              },
+              {
+                "key": "enableBatchProcessing",
+                "value": "0"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "HTTP"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.20.0"
+              },
+              {
+                "key": "fields",
+                "value": ""
+              },
+              {
+                "key": "characterEncoding",
+                "value": "none"
+              },
+              {
+                "key": "whitelistRequestHeaders",
+                "value": ""
+              },
+              {
+                "key": "operation",
+                "value": "Query(GET)"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.20.0"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MessageFlow_5",
+          "name": "HTTPS",
+          "sourceRef": "Participant_1",
+          "targetRef": "StartEvent_2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "ComponentType",
+                "value": "HTTPS"
+              },
+              {
+                "key": "Description",
+                "value": ""
+              },
+              {
+                "key": "maximumBodySize",
+                "value": "40"
+              },
+              {
+                "key": "ComponentNS",
+                "value": "sap"
+              },
+              {
+                "key": "componentVersion",
+                "value": "1.4"
+              },
+              {
+                "key": "urlPath",
+                "value": "/getBillingDocumentItem"
+              },
+              {
+                "key": "Name",
+                "value": "HTTPS"
+              },
+              {
+                "key": "TransportProtocolVersion",
+                "value": "1.4.1"
+              },
+              {
+                "key": "ComponentSWCVName",
+                "value": "external"
+              },
+              {
+                "key": "system",
+                "value": "Sender"
+              },
+              {
+                "key": "xsrfProtection",
+                "value": "0"
+              },
+              {
+                "key": "TransportProtocol",
+                "value": "HTTPS"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::AdapterVariant/cname::sap:HTTPS/tp::HTTPS/mp::None/direction::Sender/version::1.4.1"
+              },
+              {
+                "key": "userRole",
+                "value": "{{User Role}}"
+              },
+              {
+                "key": "senderAuthType",
+                "value": "{{RoleBased}}"
+              },
+              {
+                "key": "MessageProtocol",
+                "value": "None"
+              },
+              {
+                "key": "MessageProtocolVersion",
+                "value": "1.4.1"
+              },
+              {
+                "key": "ComponentSWCVId",
+                "value": "1.4.1"
+              },
+              {
+                "key": "direction",
+                "value": "Sender"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "bpmn2:process": [
+      {
+        "id": "Process_99",
+        "name": "Integration to External Service",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "transactionTimeout",
+              "value": "30"
+            },
+            {
+              "key": "processType",
+              "value": "directCall"
+            },
+            {
+              "key": "componentVersion",
+              "value": "1.1"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowElementVariant/cname::LocalIntegrationProcess/version::1.1.3"
+            },
+            {
+              "key": "transactionalHandling",
+              "value": "From Calling Process"
+            }
+          ]
+        },
+        "bpmn2:startEvent": {
+          "id": "StartEvent_100",
+          "name": "Start 3",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::StartEvent"
+              },
+              {
+                "key": "activityType",
+                "value": "StartEvent"
+              }
+            ]
+          },
+          "bpmn2:outgoing": "SequenceFlow_102"
+        },
+        "bpmn2:serviceTask": {
+          "id": "ServiceTask_103",
+          "name": "Request Reply 4",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "componentVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "activityType",
+                "value": "ExternalCall"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::ExternalCall/version::1.0.4"
+              }
+            ]
+          },
+          "bpmn2:incoming": "SequenceFlow_102",
+          "bpmn2:outgoing": "SequenceFlow_104"
+        },
+        "bpmn2:endEvent": {
+          "id": "EndEvent_101",
+          "name": "End 2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::EndEvent"
+              },
+              {
+                "key": "activityType",
+                "value": "EndEvent"
+              }
+            ]
+          },
+          "bpmn2:incoming": "SequenceFlow_104"
+        },
+        "bpmn2:sequenceFlow": [
+          {
+            "id": "SequenceFlow_102",
+            "sourceRef": "StartEvent_100",
+            "targetRef": "ServiceTask_103"
+          },
+          {
+            "id": "SequenceFlow_104",
+            "sourceRef": "ServiceTask_103",
+            "targetRef": "EndEvent_101"
+          }
+        ]
+      },
+      {
+        "id": "Process_68",
+        "name": "Local Integration Process Post",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "transactionTimeout",
+              "value": "30"
+            },
+            {
+              "key": "processType",
+              "value": "directCall"
+            },
+            {
+              "key": "componentVersion",
+              "value": "1.1"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowElementVariant/cname::LocalIntegrationProcess/version::1.1.3"
+            },
+            {
+              "key": "transactionalHandling",
+              "value": "From Calling Process"
+            }
+          ]
+        },
+        "bpmn2:startEvent": {
+          "id": "StartEvent_69",
+          "name": "Start 2",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::StartEvent"
+              },
+              {
+                "key": "activityType",
+                "value": "StartEvent"
+              }
+            ]
+          },
+          "bpmn2:outgoing": "SequenceFlow_71"
+        },
+        "bpmn2:serviceTask": {
+          "id": "ServiceTask_72",
+          "name": "Request Reply 3",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "componentVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "activityType",
+                "value": "ExternalCall"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::ExternalCall/version::1.0.4"
+              }
+            ]
+          },
+          "bpmn2:incoming": "SequenceFlow_71",
+          "bpmn2:outgoing": "SequenceFlow_73"
+        },
+        "bpmn2:endEvent": {
+          "id": "EndEvent_70",
+          "name": "End 1",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::EndEvent"
+              },
+              {
+                "key": "activityType",
+                "value": "EndEvent"
+              }
+            ]
+          },
+          "bpmn2:incoming": "SequenceFlow_73"
+        },
+        "bpmn2:sequenceFlow": [
+          {
+            "id": "SequenceFlow_71",
+            "sourceRef": "StartEvent_69",
+            "targetRef": "ServiceTask_72"
+          },
+          {
+            "id": "SequenceFlow_73",
+            "sourceRef": "ServiceTask_72",
+            "targetRef": "EndEvent_70"
+          }
+        ]
+      },
+      {
+        "id": "Process_1",
+        "name": "Integration Process",
+        "bpmn2:extensionElements": {
+          "ifl:property": [
+            {
+              "key": "transactionTimeout",
+              "value": "30"
+            },
+            {
+              "key": "componentVersion",
+              "value": "1.1"
+            },
+            {
+              "key": "cmdVariantUri",
+              "value": "ctype::FlowElementVariant/cname::IntegrationProcess/version::1.1.3"
+            },
+            {
+              "key": "transactionalHandling",
+              "value": "Required"
+            }
+          ]
+        },
+        "bpmn2:subProcess": {
+          "id": "SubProcess_35",
+          "name": "Exception Subprocess 1",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "componentVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "activityType",
+                "value": "ErrorEventSubProcessTemplate"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::ErrorEventSubProcessTemplate/version::1.0.2"
+              }
+            ]
+          },
+          "bpmn2:callActivity": [
+            {
+              "id": "CallActivity_47",
+              "name": "Error script",
+              "bpmn2:extensionElements": {
+                "ifl:property": [
+                  {
+                    "key": "scriptFunction",
+                    "value": ""
+                  },
+                  {
+                    "key": "scriptBundleId",
+                    "value": ""
+                  },
+                  {
+                    "key": "componentVersion",
+                    "value": "1.1"
+                  },
+                  {
+                    "key": "activityType",
+                    "value": "Script"
+                  },
+                  {
+                    "key": "cmdVariantUri",
+                    "value": "ctype::FlowstepVariant/cname::GroovyScript/version::1.1.1"
+                  },
+                  {
+                    "key": "subActivityType",
+                    "value": "GroovyScript"
+                  },
+                  {
+                    "key": "script",
+                    "value": "Check_ErrorMessage_Response.groovy"
+                  }
+                ]
+              },
+              "bpmn2:incoming": "SequenceFlow_50",
+              "bpmn2:outgoing": "SequenceFlow_51"
+            },
+            {
+              "id": "CallActivity_39",
+              "name": "Content Modifier Error",
+              "bpmn2:extensionElements": {
+                "ifl:property": [
+                  {
+                    "key": "bodyType",
+                    "value": "expression"
+                  },
+                  {
+                    "key": "propertyTable",
+                    "value": ""
+                  },
+                  {
+                    "key": "headerTable",
+                    "value": ""
+                  },
+                  {
+                    "key": "wrapContent",
+                    "value": "{\n\"result\": \"\",\n\"errorMessages\":  \"${header.errorMessage}\",\n\"status\" :\" \"\n}"
+                  },
+                  {
+                    "key": "componentVersion",
+                    "value": "1.5"
+                  },
+                  {
+                    "key": "activityType",
+                    "value": "Enricher"
+                  },
+                  {
+                    "key": "cmdVariantUri",
+                    "value": "ctype::FlowstepVariant/cname::Enricher/version::1.5.1"
+                  }
+                ]
+              },
+              "bpmn2:incoming": "SequenceFlow_51",
+              "bpmn2:outgoing": "SequenceFlow_44"
+            }
+          ],
+          "bpmn2:endEvent": {
+            "id": "EndEvent_43",
+            "name": "End",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.1"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::MessageEndEvent/version::1.1.0"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_44",
+            "bpmn2:messageEventDefinition": ""
+          },
+          "bpmn2:startEvent": {
+            "id": "StartEvent_36",
+            "name": "Error Start 1",
+            "bpmn2:outgoing": "SequenceFlow_50",
+            "bpmn2:errorEventDefinition": {
+              "bpmn2:extensionElements": {
+                "ifl:property": [
+                  {
+                    "key": "cmdVariantUri",
+                    "value": "ctype::FlowstepVariant/cname::ErrorStartEvent"
+                  },
+                  {
+                    "key": "activityType",
+                    "value": "StartErrorEvent"
+                  }
+                ]
+              }
+            }
+          },
+          "bpmn2:sequenceFlow": [
+            {
+              "id": "SequenceFlow_51",
+              "sourceRef": "CallActivity_47",
+              "targetRef": "CallActivity_39"
+            },
+            {
+              "id": "SequenceFlow_44",
+              "sourceRef": "CallActivity_39",
+              "targetRef": "EndEvent_43"
+            },
+            {
+              "id": "SequenceFlow_50",
+              "sourceRef": "StartEvent_36",
+              "targetRef": "CallActivity_47"
+            }
+          ]
+        },
+        "bpmn2:callActivity": [
+          {
+            "id": "CallActivity_56",
+            "name": "Get Endpoint",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "scriptFunction",
+                  "value": ""
+                },
+                {
+                  "key": "scriptBundleId",
+                  "value": ""
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.1"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Script"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GroovyScript/version::1.1.1"
+                },
+                {
+                  "key": "subActivityType",
+                  "value": "GroovyScript"
+                },
+                {
+                  "key": "script",
+                  "value": "get_endpoint.groovy"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_57",
+            "bpmn2:outgoing": "SequenceFlow_58"
+          },
+          {
+            "id": "CallActivity_85",
+            "name": "Final Formatting",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "scriptFunction",
+                  "value": ""
+                },
+                {
+                  "key": "scriptBundleId",
+                  "value": ""
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.1"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Script"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GroovyScript/version::1.1.2"
+                },
+                {
+                  "key": "subActivityType",
+                  "value": "GroovyScript"
+                },
+                {
+                  "key": "script",
+                  "value": "FinalFormatting.groovy"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_32",
+            "bpmn2:outgoing": "SequenceFlow_86"
+          },
+          {
+            "id": "CallActivity_95",
+            "name": "Process Call 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "processId",
+                  "value": "Process_99"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ProcessCallElement"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::NonLoopingProcess/version::1.0.3"
+                },
+                {
+                  "key": "subActivityType",
+                  "value": "NonLoopingProcess"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_96",
+            "bpmn2:outgoing": "SequenceFlow_97"
+          },
+          {
+            "id": "CallActivity_65",
+            "name": "Process Call 2",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "processId",
+                  "value": "Process_68"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ProcessCallElement"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::NonLoopingProcess/version::1.0.3"
+                },
+                {
+                  "key": "subActivityType",
+                  "value": "NonLoopingProcess"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_66",
+            "bpmn2:outgoing": "SequenceFlow_67"
+          },
+          {
+            "id": "CallActivity_91",
+            "name": "Content Modifier 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "bodyType",
+                  "value": "constant"
+                },
+                {
+                  "key": "propertyTable",
+                  "value": "<row><cell id='Action'>Create</cell><cell id='Type'>constant</cell><cell id='Value'>{{use_external_document}}</cell><cell id='Default'></cell><cell id='Name'>use_external_document</cell><cell id='Datatype'></cell></row>"
+                },
+                {
+                  "key": "headerTable",
+                  "value": ""
+                },
+                {
+                  "key": "wrapContent",
+                  "value": ""
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.6"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Enricher"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::Enricher/version::1.6.0"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_58",
+            "bpmn2:outgoing": "SequenceFlow_92"
+          },
+          {
+            "id": "CallActivity_93",
+            "name": "Content Modifier 2",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "bodyType",
+                  "value": "expression"
+                },
+                {
+                  "key": "propertyTable",
+                  "value": ""
+                },
+                {
+                  "key": "headerTable",
+                  "value": ""
+                },
+                {
+                  "key": "wrapContent",
+                  "value": "{\n\"endpointUrl\" :\"${property.EndpointURL}\",\n\"cloudConnectorLocationId\" : \"${property.CloudConnectorLocationId}\",\n\"client\":\"${property.client}\",\n\"constant\":\"${header.constant}\",\n\"filter\":\"${property.filter}\",\n\"language\":\"${header.language}\"\n}"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.6"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Enricher"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::Enricher/version::1.6.0"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_94",
+            "bpmn2:outgoing": "SequenceFlow_96"
+          },
+          {
+            "id": "CallActivity_59",
+            "name": "Content Modifier 5",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "bodyType",
+                  "value": "expression"
+                },
+                {
+                  "key": "propertyTable",
+                  "value": "<row><cell id='Action'>Create</cell><cell id='Type'>constant</cell><cell id='Value'>{{custom_extension_enabled}}</cell><cell id='Default'></cell><cell id='Name'>custom_extension_enabled</cell><cell id='Datatype'></cell></row>"
+                },
+                {
+                  "key": "headerTable",
+                  "value": ""
+                },
+                {
+                  "key": "wrapContent",
+                  "value": ""
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.5"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Enricher"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::Enricher/version::1.5.1"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_86",
+            "bpmn2:outgoing": "SequenceFlow_60"
+          },
+          {
+            "id": "CallActivity_80",
+            "name": "Content Modifier 4",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "bodyType",
+                  "value": "expression"
+                },
+                {
+                  "key": "propertyTable",
+                  "value": "<row><cell id='Action'>Create</cell><cell id='Type'>expression</cell><cell id='Value'>${in.body}</cell><cell id='Default'></cell><cell id='Name'>count</cell><cell id='Datatype'>java.lang.String</cell></row>"
+                },
+                {
+                  "key": "headerTable",
+                  "value": ""
+                },
+                {
+                  "key": "wrapContent",
+                  "value": ""
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.5"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Enricher"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::Enricher/version::1.5.1"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_78",
+            "bpmn2:outgoing": "SequenceFlow_81"
+          },
+          {
+            "id": "CallActivity_89",
+            "name": "Content Modifier 3",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "bodyType",
+                  "value": "expression"
+                },
+                {
+                  "key": "propertyTable",
+                  "value": ""
+                },
+                {
+                  "key": "headerTable",
+                  "value": ""
+                },
+                {
+                  "key": "wrapContent",
+                  "value": "{\n\t\"A_BillingDocumentItem\": {\n\t\t\"A_BillingDocumentItemType\": [\n\t\t\t{\n\t\t\t}\n\t\t]\n\t},\n\t\"count\": \"0\",\n        \"errorMessage\": \"MISSING_CPI_CONFIG_FOR_EXTERNAL_DOC\"\n}"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.6"
+                },
+                {
+                  "key": "activityType",
+                  "value": "Enricher"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::Enricher/version::1.6.0"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_90",
+            "bpmn2:outgoing": "SequenceFlow_98"
+          },
+          {
+            "id": "CallActivity_31",
+            "name": "XML to JSON Converter 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "xmlJsonUseStreaming",
+                  "value": "false"
+                },
+                {
+                  "key": "xmlJsonSuppressRootElement",
+                  "value": "false"
+                },
+                {
+                  "key": "jsonOutputEncoding",
+                  "value": ""
+                },
+                {
+                  "key": "jsonNamespaceMapping",
+                  "value": ""
+                },
+                {
+                  "key": "xmlJsonConvertAllElements",
+                  "value": "specific"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "XmlToJsonConverter"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::XmlToJsonConverter/version::1.0.6"
+                },
+                {
+                  "key": "useNamespaces",
+                  "value": "true"
+                },
+                {
+                  "key": "jsonNamespaceSeparator",
+                  "value": ":"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_28",
+            "bpmn2:outgoing": "SequenceFlow_32"
+          }
+        ],
+        "bpmn2:serviceTask": [
+          {
+            "id": "ServiceTask_77",
+            "name": "Request Reply 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ExternalCall"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::ExternalCall/version::1.0.4"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_88",
+            "bpmn2:outgoing": "SequenceFlow_78"
+          },
+          {
+            "id": "ServiceTask_27",
+            "name": "Request Reply 2",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ExternalCall"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::ExternalCall/version::1.0.4"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_81",
+            "bpmn2:outgoing": "SequenceFlow_28"
+          },
+          {
+            "id": "ServiceTask_52",
+            "name": "Request Reply",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ExternalCall"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::ExternalCall/version::1.0.4"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_3",
+            "bpmn2:outgoing": "SequenceFlow_57"
+          }
+        ],
+        "bpmn2:startEvent": {
+          "id": "StartEvent_2",
+          "name": "Start",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "componentVersion",
+                "value": "1.0"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::MessageStartEvent/version::1.0"
+              }
+            ]
+          },
+          "bpmn2:outgoing": "SequenceFlow_3",
+          "bpmn2:messageEventDefinition": ""
+        },
+        "bpmn2:endEvent": {
+          "id": "EndEvent_2",
+          "name": "End",
+          "bpmn2:extensionElements": {
+            "ifl:property": [
+              {
+                "key": "componentVersion",
+                "value": "1.1"
+              },
+              {
+                "key": "cmdVariantUri",
+                "value": "ctype::FlowstepVariant/cname::MessageEndEvent/version::1.1.0"
+              }
+            ]
+          },
+          "bpmn2:incoming": [
+            "SequenceFlow_67",
+            "SequenceFlow_63"
+          ],
+          "bpmn2:messageEventDefinition": ""
+        },
+        "bpmn2:exclusiveGateway": [
+          {
+            "default": "SequenceFlow_63",
+            "id": "ExclusiveGateway_62",
+            "name": "Router 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.1"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ExclusiveGateway"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::ExclusiveGateway/version::1.1.2"
+                },
+                {
+                  "key": "throwException",
+                  "value": "false"
+                }
+              ]
+            },
+            "bpmn2:incoming": [
+              "SequenceFlow_97",
+              "SequenceFlow_98",
+              "SequenceFlow_60"
+            ],
+            "bpmn2:outgoing": [
+              "SequenceFlow_66",
+              "SequenceFlow_63"
+            ]
+          },
+          {
+            "default": "SequenceFlow_88",
+            "id": "ExclusiveGateway_87",
+            "name": "Router 1",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "componentVersion",
+                  "value": "1.1"
+                },
+                {
+                  "key": "activityType",
+                  "value": "ExclusiveGateway"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::ExclusiveGateway/version::1.1.2"
+                },
+                {
+                  "key": "throwException",
+                  "value": "false"
+                }
+              ]
+            },
+            "bpmn2:incoming": "SequenceFlow_92",
+            "bpmn2:outgoing": [
+              "SequenceFlow_90",
+              "SequenceFlow_88",
+              "SequenceFlow_94"
+            ]
+          }
+        ],
+        "bpmn2:sequenceFlow": [
+          {
+            "id": "SequenceFlow_58",
+            "sourceRef": "CallActivity_56",
+            "targetRef": "CallActivity_91"
+          },
+          {
+            "id": "SequenceFlow_86",
+            "sourceRef": "CallActivity_85",
+            "targetRef": "CallActivity_59"
+          },
+          {
+            "id": "SequenceFlow_78",
+            "sourceRef": "ServiceTask_77",
+            "targetRef": "CallActivity_80"
+          },
+          {
+            "id": "SequenceFlow_28",
+            "sourceRef": "ServiceTask_27",
+            "targetRef": "CallActivity_31"
+          },
+          {
+            "id": "SequenceFlow_57",
+            "sourceRef": "ServiceTask_52",
+            "targetRef": "CallActivity_56"
+          },
+          {
+            "id": "SequenceFlow_3",
+            "sourceRef": "StartEvent_2",
+            "targetRef": "ServiceTask_52"
+          },
+          {
+            "id": "SequenceFlow_97",
+            "sourceRef": "CallActivity_95",
+            "targetRef": "ExclusiveGateway_62"
+          },
+          {
+            "id": "SequenceFlow_67",
+            "sourceRef": "CallActivity_65",
+            "targetRef": "EndEvent_2"
+          },
+          {
+            "id": "SequenceFlow_92",
+            "sourceRef": "CallActivity_91",
+            "targetRef": "ExclusiveGateway_87"
+          },
+          {
+            "id": "SequenceFlow_96",
+            "sourceRef": "CallActivity_93",
+            "targetRef": "CallActivity_95"
+          },
+          {
+            "id": "SequenceFlow_60",
+            "sourceRef": "CallActivity_59",
+            "targetRef": "ExclusiveGateway_62"
+          },
+          {
+            "id": "SequenceFlow_81",
+            "sourceRef": "CallActivity_80",
+            "targetRef": "ServiceTask_27"
+          },
+          {
+            "id": "SequenceFlow_98",
+            "sourceRef": "CallActivity_89",
+            "targetRef": "ExclusiveGateway_62"
+          },
+          {
+            "id": "SequenceFlow_66",
+            "name": "Route 2",
+            "sourceRef": "ExclusiveGateway_62",
+            "targetRef": "CallActivity_65",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "expressionType",
+                  "value": "NonXML"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0"
+                }
+              ]
+            },
+            "bpmn2:conditionExpression": {
+              "_": "${property.custom_extension_enabled} = 'true'",
+              "id": "FormalExpression_SequenceFlow_66_1743945213428",
+              "xsi:type": "bpmn2:tFormalExpression"
+            }
+          },
+          {
+            "id": "SequenceFlow_63",
+            "name": "Route 1",
+            "sourceRef": "ExclusiveGateway_62",
+            "targetRef": "EndEvent_2",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "expressionType",
+                  "value": "XML"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0"
+                }
+              ]
+            }
+          },
+          {
+            "id": "SequenceFlow_90",
+            "name": "Route 2",
+            "sourceRef": "ExclusiveGateway_87",
+            "targetRef": "CallActivity_89",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "expressionType",
+                  "value": "NonXML"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0"
+                }
+              ]
+            },
+            "bpmn2:conditionExpression": {
+              "_": "${property.use_external_document} = 'false' and ${header.useExternalDocument} = 'true'",
+              "id": "FormalExpression_SequenceFlow_90_1743945213429",
+              "xsi:type": "bpmn2:tFormalExpression"
+            }
+          },
+          {
+            "id": "SequenceFlow_88",
+            "name": "Route 1",
+            "sourceRef": "ExclusiveGateway_87",
+            "targetRef": "ServiceTask_77",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "expressionType",
+                  "value": "XML"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0"
+                }
+              ]
+            }
+          },
+          {
+            "id": "SequenceFlow_94",
+            "name": "Route 3",
+            "sourceRef": "ExclusiveGateway_87",
+            "targetRef": "CallActivity_93",
+            "bpmn2:extensionElements": {
+              "ifl:property": [
+                {
+                  "key": "expressionType",
+                  "value": "NonXML"
+                },
+                {
+                  "key": "componentVersion",
+                  "value": "1.0"
+                },
+                {
+                  "key": "cmdVariantUri",
+                  "value": "ctype::FlowstepVariant/cname::GatewayRoute/version::1.0.0"
+                }
+              ]
+            },
+            "bpmn2:conditionExpression": {
+              "_": "${property.use_external_document} = 'true' and ${header.useExternalDocument} = 'true'",
+              "id": "FormalExpression_SequenceFlow_94_1743945213429",
+              "xsi:type": "bpmn2:tFormalExpression"
+            }
+          },
+          {
+            "id": "SequenceFlow_32",
+            "sourceRef": "CallActivity_31",
+            "targetRef": "CallActivity_85"
+          }
+        ]
+      }
+    ],
+    "bpmndi:BPMNDiagram": {
+      "id": "BPMNDiagram_1",
+      "name": "Default Collaboration Diagram",
+      "bpmndi:BPMNPlane": {
+        "bpmnElement": "Collaboration_1",
+        "id": "BPMNPlane_1",
+        "bpmndi:BPMNShape": [
+          {
+            "bpmnElement": "SubProcess_35",
+            "id": "BPMNShape_SubProcess_35",
+            "dc:Bounds": {
+              "height": "154.0",
+              "width": "547.0",
+              "x": "1466.0",
+              "y": "148.0"
+            }
+          },
+          {
+            "bpmnElement": "StartEvent_36",
+            "id": "BPMNShape_StartEvent_36",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "1489.0",
+              "y": "195.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_47",
+            "id": "BPMNShape_CallActivity_47",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1587.0",
+              "y": "183.0"
+            }
+          },
+          {
+            "bpmnElement": "EndEvent_43",
+            "id": "BPMNShape_EndEvent_43",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "1919.0",
+              "y": "195.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_39",
+            "id": "BPMNShape_CallActivity_39",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1751.0",
+              "y": "183.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_56",
+            "id": "BPMNShape_CallActivity_56",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "322.0",
+              "y": "-48.0"
+            }
+          },
+          {
+            "bpmnElement": "EndEvent_101",
+            "id": "BPMNShape_EndEvent_101",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "-9.0",
+              "y": "770.0"
+            }
+          },
+          {
+            "bpmnElement": "EndEvent_70",
+            "id": "BPMNShape_EndEvent_70",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "1867.0",
+              "y": "482.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_95",
+            "id": "BPMNShape_CallActivity_95",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "791.0",
+              "y": "-149.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_31",
+            "id": "BPMNShape_CallActivity_31",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1328.0",
+              "y": "-48.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_106",
+            "id": "BPMNShape_Participant_106",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "-276.0",
+              "y": "945.0"
+            }
+          },
+          {
+            "bpmnElement": "ServiceTask_72",
+            "id": "BPMNShape_ServiceTask_72",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1639.0",
+              "y": "467.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_59",
+            "id": "BPMNShape_CallActivity_59",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1690.0",
+              "y": "-36.0"
+            }
+          },
+          {
+            "bpmnElement": "ServiceTask_52",
+            "id": "BPMNShape_ServiceTask_52",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "145.0",
+              "y": "-44.0"
+            }
+          },
+          {
+            "bpmnElement": "StartEvent_100",
+            "id": "BPMNShape_StartEvent_100",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "-396.0",
+              "y": "770.0"
+            }
+          },
+          {
+            "bpmnElement": "EndEvent_2",
+            "id": "BPMNShape_EndEvent_2",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "1982.0",
+              "y": "-38.0"
+            }
+          },
+          {
+            "bpmnElement": "ServiceTask_77",
+            "id": "BPMNShape_ServiceTask_77",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "827.0",
+              "y": "-44.0"
+            }
+          },
+          {
+            "bpmnElement": "StartEvent_2",
+            "id": "BPMNShape_StartEvent_2",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "68.0",
+              "y": "-30.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_53",
+            "id": "BPMNShape_Participant_53",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "145.0",
+              "y": "357.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_75",
+            "id": "BPMNShape_Participant_75",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "1648.0",
+              "y": "672.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_80",
+            "id": "BPMNShape_CallActivity_80",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "997.0",
+              "y": "-48.0"
+            }
+          },
+          {
+            "bpmnElement": "ServiceTask_103",
+            "id": "BPMNShape_ServiceTask_103",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "-276.0",
+              "y": "760.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_Process_99",
+            "id": "BPMNShape_Participant_Process_99",
+            "dc:Bounds": {
+              "height": "220.0",
+              "width": "540.0",
+              "x": "-441.0",
+              "y": "697.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_65",
+            "id": "BPMNShape_CallActivity_65",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1823.0",
+              "y": "-136.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_89",
+            "id": "BPMNShape_CallActivity_89",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "646.0",
+              "y": "97.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_85",
+            "id": "BPMNShape_CallActivity_85",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1521.0",
+              "y": "-44.0"
+            }
+          },
+          {
+            "bpmnElement": "StartEvent_69",
+            "id": "BPMNShape_StartEvent_69",
+            "dc:Bounds": {
+              "height": "32.0",
+              "width": "32.0",
+              "x": "1480.0",
+              "y": "482.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_2",
+            "id": "BPMNShape_Participant_2",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "1184.0",
+              "y": "380.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_1",
+            "id": "BPMNShape_Participant_1",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "-241.0",
+              "y": "120.0"
+            }
+          },
+          {
+            "bpmnElement": "ExclusiveGateway_87",
+            "id": "BPMNShape_ExclusiveGateway_87",
+            "dc:Bounds": {
+              "height": "40.0",
+              "width": "40.0",
+              "x": "676.0",
+              "y": "-38.0"
+            }
+          },
+          {
+            "bpmnElement": "ExclusiveGateway_62",
+            "id": "BPMNShape_ExclusiveGateway_62",
+            "dc:Bounds": {
+              "height": "40.0",
+              "width": "40.0",
+              "x": "1853.0",
+              "y": "-38.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_83",
+            "id": "BPMNShape_Participant_83",
+            "dc:Bounds": {
+              "height": "140.0",
+              "width": "100.0",
+              "x": "827.0",
+              "y": "380.0"
+            }
+          },
+          {
+            "bpmnElement": "ServiceTask_27",
+            "id": "BPMNShape_ServiceTask_27",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "1184.0",
+              "y": "-44.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_91",
+            "id": "BPMNShape_CallActivity_91",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "472.0",
+              "y": "-48.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_Process_1",
+            "id": "BPMNShape_Participant_Process_1",
+            "dc:Bounds": {
+              "height": "524.0",
+              "width": "2082.0",
+              "x": "16.0",
+              "y": "-202.0"
+            }
+          },
+          {
+            "bpmnElement": "CallActivity_93",
+            "id": "BPMNShape_CallActivity_93",
+            "dc:Bounds": {
+              "height": "60.0",
+              "width": "100.0",
+              "x": "641.0",
+              "y": "-149.0"
+            }
+          },
+          {
+            "bpmnElement": "Participant_Process_68",
+            "id": "BPMNShape_Participant_Process_68",
+            "dc:Bounds": {
+              "height": "220.0",
+              "width": "555.0",
+              "x": "1428.0",
+              "y": "409.0"
+            }
+          }
+        ],
+        "bpmndi:BPMNEdge": [
+          {
+            "bpmnElement": "SequenceFlow_44",
+            "id": "BPMNEdge_SequenceFlow_44",
+            "sourceElement": "BPMNShape_CallActivity_39",
+            "targetElement": "BPMNShape_EndEvent_43",
+            "di:waypoint": [
+              {
+                "x": "1801.0",
+                "xsi:type": "dc:Point",
+                "y": "212.25"
+              },
+              {
+                "x": "1935.5",
+                "xsi:type": "dc:Point",
+                "y": "212.25"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_50",
+            "id": "BPMNEdge_SequenceFlow_50",
+            "sourceElement": "BPMNShape_StartEvent_36",
+            "targetElement": "BPMNShape_CallActivity_47",
+            "di:waypoint": [
+              {
+                "x": "1505.0",
+                "xsi:type": "dc:Point",
+                "y": "211.5"
+              },
+              {
+                "x": "1610.0",
+                "xsi:type": "dc:Point",
+                "y": "211.5"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_51",
+            "id": "BPMNEdge_SequenceFlow_51",
+            "sourceElement": "BPMNShape_CallActivity_47",
+            "targetElement": "BPMNShape_CallActivity_39",
+            "di:waypoint": [
+              {
+                "x": "1637.0",
+                "xsi:type": "dc:Point",
+                "y": "213.0"
+              },
+              {
+                "x": "1781.0",
+                "xsi:type": "dc:Point",
+                "y": "213.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_104",
+            "id": "BPMNEdge_SequenceFlow_104",
+            "sourceElement": "BPMNShape_ServiceTask_103",
+            "targetElement": "BPMNShape_EndEvent_101",
+            "di:waypoint": [
+              {
+                "x": "-226.0",
+                "xsi:type": "dc:Point",
+                "y": "788.0"
+              },
+              {
+                "x": "7.0",
+                "xsi:type": "dc:Point",
+                "y": "788.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_102",
+            "id": "BPMNEdge_SequenceFlow_102",
+            "sourceElement": "BPMNShape_StartEvent_100",
+            "targetElement": "BPMNShape_ServiceTask_103",
+            "di:waypoint": [
+              {
+                "x": "-380.0",
+                "xsi:type": "dc:Point",
+                "y": "788.0"
+              },
+              {
+                "x": "-226.0",
+                "xsi:type": "dc:Point",
+                "y": "788.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_81",
+            "id": "BPMNEdge_SequenceFlow_81",
+            "sourceElement": "BPMNShape_CallActivity_80",
+            "targetElement": "BPMNShape_ServiceTask_27",
+            "di:waypoint": [
+              {
+                "x": "1047.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "1234.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_60",
+            "id": "BPMNEdge_SequenceFlow_60",
+            "sourceElement": "BPMNShape_CallActivity_59",
+            "targetElement": "BPMNShape_ExclusiveGateway_62",
+            "di:waypoint": [
+              {
+                "x": "1740.0",
+                "xsi:type": "dc:Point",
+                "y": "-12.0"
+              },
+              {
+                "x": "1873.0",
+                "xsi:type": "dc:Point",
+                "y": "-12.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_88",
+            "id": "BPMNEdge_SequenceFlow_88",
+            "sourceElement": "BPMNShape_ExclusiveGateway_87",
+            "targetElement": "BPMNShape_ServiceTask_77",
+            "di:waypoint": [
+              {
+                "x": "696.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "877.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_66",
+            "id": "BPMNEdge_SequenceFlow_66",
+            "sourceElement": "BPMNShape_ExclusiveGateway_62",
+            "targetElement": "BPMNShape_CallActivity_65",
+            "di:waypoint": [
+              {
+                "x": "1870.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "1870.0",
+                "xsi:type": "dc:Point",
+                "y": "-96.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_67",
+            "id": "BPMNEdge_SequenceFlow_67",
+            "sourceElement": "BPMNShape_CallActivity_65",
+            "targetElement": "BPMNShape_EndEvent_2",
+            "di:waypoint": [
+              {
+                "x": "1873.0",
+                "xsi:type": "dc:Point",
+                "y": "-106.0"
+              },
+              {
+                "x": "1952.5",
+                "xsi:type": "dc:Point",
+                "y": "-106.0"
+              },
+              {
+                "x": "1952.5",
+                "xsi:type": "dc:Point",
+                "y": "-22.0"
+              },
+              {
+                "x": "1998.0",
+                "xsi:type": "dc:Point",
+                "y": "-22.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_63",
+            "id": "BPMNEdge_SequenceFlow_63",
+            "sourceElement": "BPMNShape_ExclusiveGateway_62",
+            "targetElement": "BPMNShape_EndEvent_2",
+            "di:waypoint": [
+              {
+                "x": "1873.0",
+                "xsi:type": "dc:Point",
+                "y": "-20.0"
+              },
+              {
+                "x": "1998.0",
+                "xsi:type": "dc:Point",
+                "y": "-20.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_86",
+            "id": "BPMNEdge_SequenceFlow_86",
+            "sourceElement": "BPMNShape_CallActivity_85",
+            "targetElement": "BPMNShape_CallActivity_59",
+            "di:waypoint": [
+              {
+                "x": "1571.0",
+                "xsi:type": "dc:Point",
+                "y": "-10.0"
+              },
+              {
+                "x": "1740.0",
+                "xsi:type": "dc:Point",
+                "y": "-10.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_58",
+            "id": "BPMNEdge_SequenceFlow_58",
+            "sourceElement": "BPMNShape_CallActivity_56",
+            "targetElement": "BPMNShape_CallActivity_91",
+            "di:waypoint": [
+              {
+                "x": "372.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "522.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_90",
+            "id": "BPMNEdge_SequenceFlow_90",
+            "sourceElement": "BPMNShape_ExclusiveGateway_87",
+            "targetElement": "BPMNShape_CallActivity_89",
+            "di:waypoint": [
+              {
+                "x": "696.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "696.0",
+                "xsi:type": "dc:Point",
+                "y": "127.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_92",
+            "id": "BPMNEdge_SequenceFlow_92",
+            "sourceElement": "BPMNShape_CallActivity_91",
+            "targetElement": "BPMNShape_ExclusiveGateway_87",
+            "di:waypoint": [
+              {
+                "x": "522.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "696.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_98",
+            "id": "BPMNEdge_SequenceFlow_98",
+            "sourceElement": "BPMNShape_CallActivity_89",
+            "targetElement": "BPMNShape_ExclusiveGateway_62",
+            "di:waypoint": [
+              {
+                "x": "696.0",
+                "xsi:type": "dc:Point",
+                "y": "127.0"
+              },
+              {
+                "x": "1816.0",
+                "xsi:type": "dc:Point",
+                "y": "127.0"
+              },
+              {
+                "x": "1816.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "1873.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_32",
+            "id": "BPMNEdge_SequenceFlow_32",
+            "sourceElement": "BPMNShape_CallActivity_31",
+            "targetElement": "BPMNShape_CallActivity_85",
+            "di:waypoint": [
+              {
+                "x": "1378.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "1571.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_78",
+            "id": "BPMNEdge_SequenceFlow_78",
+            "sourceElement": "BPMNShape_ServiceTask_77",
+            "targetElement": "BPMNShape_CallActivity_80",
+            "di:waypoint": [
+              {
+                "x": "877.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "1047.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_57",
+            "id": "BPMNEdge_SequenceFlow_57",
+            "sourceElement": "BPMNShape_ServiceTask_52",
+            "targetElement": "BPMNShape_CallActivity_56",
+            "di:waypoint": [
+              {
+                "x": "195.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "378.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_94",
+            "id": "BPMNEdge_SequenceFlow_94",
+            "sourceElement": "BPMNShape_ExclusiveGateway_87",
+            "targetElement": "BPMNShape_CallActivity_93",
+            "di:waypoint": [
+              {
+                "x": "693.5",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "693.5",
+                "xsi:type": "dc:Point",
+                "y": "-119.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_96",
+            "id": "BPMNEdge_SequenceFlow_96",
+            "sourceElement": "BPMNShape_CallActivity_93",
+            "targetElement": "BPMNShape_CallActivity_95",
+            "di:waypoint": [
+              {
+                "x": "691.0",
+                "xsi:type": "dc:Point",
+                "y": "-119.0"
+              },
+              {
+                "x": "841.0",
+                "xsi:type": "dc:Point",
+                "y": "-119.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_97",
+            "id": "BPMNEdge_SequenceFlow_97",
+            "sourceElement": "BPMNShape_CallActivity_95",
+            "targetElement": "BPMNShape_ExclusiveGateway_62",
+            "di:waypoint": [
+              {
+                "x": "891.0",
+                "xsi:type": "dc:Point",
+                "y": "-119.0"
+              },
+              {
+                "x": "1808.0",
+                "xsi:type": "dc:Point",
+                "y": "-119.0"
+              },
+              {
+                "x": "1808.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              },
+              {
+                "x": "1853.0",
+                "xsi:type": "dc:Point",
+                "y": "-18.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_28",
+            "id": "BPMNEdge_SequenceFlow_28",
+            "sourceElement": "BPMNShape_ServiceTask_27",
+            "targetElement": "BPMNShape_CallActivity_31",
+            "di:waypoint": [
+              {
+                "x": "1234.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              },
+              {
+                "x": "1378.0",
+                "xsi:type": "dc:Point",
+                "y": "-16.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_3",
+            "id": "BPMNEdge_SequenceFlow_3",
+            "sourceElement": "BPMNShape_StartEvent_2",
+            "targetElement": "BPMNShape_ServiceTask_52",
+            "di:waypoint": [
+              {
+                "x": "84.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              },
+              {
+                "x": "195.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_71",
+            "id": "BPMNEdge_SequenceFlow_71",
+            "sourceElement": "BPMNShape_StartEvent_69",
+            "targetElement": "BPMNShape_ServiceTask_72",
+            "di:waypoint": [
+              {
+                "x": "1496.0",
+                "xsi:type": "dc:Point",
+                "y": "497.5"
+              },
+              {
+                "x": "1689.0",
+                "xsi:type": "dc:Point",
+                "y": "497.5"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "SequenceFlow_73",
+            "id": "BPMNEdge_SequenceFlow_73",
+            "sourceElement": "BPMNShape_ServiceTask_72",
+            "targetElement": "BPMNShape_EndEvent_70",
+            "di:waypoint": [
+              {
+                "x": "1689.0",
+                "xsi:type": "dc:Point",
+                "y": "497.5"
+              },
+              {
+                "x": "1883.0",
+                "xsi:type": "dc:Point",
+                "y": "497.5"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_107",
+            "id": "BPMNEdge_MessageFlow_107",
+            "sourceElement": "BPMNShape_ServiceTask_103",
+            "targetElement": "BPMNShape_Participant_106",
+            "di:waypoint": [
+              {
+                "x": "-226.0",
+                "xsi:type": "dc:Point",
+                "y": "790.0"
+              },
+              {
+                "x": "-226.0",
+                "xsi:type": "dc:Point",
+                "y": "1015.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_84",
+            "id": "BPMNEdge_MessageFlow_84",
+            "sourceElement": "BPMNShape_ServiceTask_77",
+            "targetElement": "BPMNShape_Participant_83",
+            "di:waypoint": [
+              {
+                "x": "877.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              },
+              {
+                "x": "877.0",
+                "xsi:type": "dc:Point",
+                "y": "450.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_54",
+            "id": "BPMNEdge_MessageFlow_54",
+            "sourceElement": "BPMNShape_ServiceTask_52",
+            "targetElement": "BPMNShape_Participant_53",
+            "di:waypoint": [
+              {
+                "x": "195.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              },
+              {
+                "x": "195.0",
+                "xsi:type": "dc:Point",
+                "y": "427.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_76",
+            "id": "BPMNEdge_MessageFlow_76",
+            "sourceElement": "BPMNShape_ServiceTask_72",
+            "targetElement": "BPMNShape_Participant_75",
+            "di:waypoint": [
+              {
+                "x": "1689.0",
+                "xsi:type": "dc:Point",
+                "y": "497.0"
+              },
+              {
+                "x": "1698.0",
+                "xsi:type": "dc:Point",
+                "y": "742.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_30",
+            "id": "BPMNEdge_MessageFlow_30",
+            "sourceElement": "BPMNShape_ServiceTask_27",
+            "targetElement": "BPMNShape_Participant_2",
+            "di:waypoint": [
+              {
+                "x": "1234.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              },
+              {
+                "x": "1234.0",
+                "xsi:type": "dc:Point",
+                "y": "450.0"
+              }
+            ]
+          },
+          {
+            "bpmnElement": "MessageFlow_5",
+            "id": "BPMNEdge_MessageFlow_5",
+            "sourceElement": "BPMNShape_Participant_1",
+            "targetElement": "BPMNShape_StartEvent_2",
+            "di:waypoint": [
+              {
+                "x": "-191.0",
+                "xsi:type": "dc:Point",
+                "y": "190.0"
+              },
+              {
+                "x": "84.0",
+                "xsi:type": "dc:Point",
+                "y": "-14.0"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
