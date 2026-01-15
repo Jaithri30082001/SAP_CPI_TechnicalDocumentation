@@ -5,117 +5,90 @@ const path = require("path");
  * Generate human-readable documentation
  */
 function generateDocumentation(docModel, options = {}) {
-  const {
-    outputFormat = "console", // console | markdown
-    outputDir = "./output",
-  } = options;
-
+  const { outputFormat = "markdown", outputDir = "./output" } = options;
   const lines = [];
 
-  // =========================================================
-  // Header
-  // =========================================================
+  // 1. Header & Metadata
   lines.push("# Integration Flow Documentation");
   lines.push("");
-  lines.push(`**iFlow Name:** ${docModel.metadata.iflowName}`);
-  lines.push(`**Generated At:** ${docModel.metadata.generatedAt}`);
+  lines.push(`- **iFlow Name:** \`${docModel.metadata.iflowName}\``);
+  lines.push(`- **Generated At:** ${docModel.metadata.generatedAt}`);
+  lines.push("");
+  lines.push("---");
+
+  // 2. Participants
+  lines.push("## 🏢 Systems & Participants");
+  docModel.participants.forEach((p) => lines.push(`- ${p.name}`));
   lines.push("");
 
-  // =========================================================
-  // Participants
-  // =========================================================
-  lines.push("## Participants");
-  docModel.participants.forEach((p) => {
-    lines.push(`- **${p.name}**`);
-  });
-  lines.push("");
-
-  // =========================================================
-  // Message Flows
-  // =========================================================
-  lines.push("## Message Flows");
-  docModel.messageFlows.forEach((f) => {
-    lines.push(`- **${f.source} → ${f.target}** (Adapter: ${f.adapterType})`);
-  });
-  lines.push("");
-
-  // =========================================================
-  // Integration Steps
-  // =========================================================
-  lines.push("## Integration Steps");
+  // 3. Integration Steps
+  lines.push("## 🛤️ Integration Process Flow");
+  lines.push(
+    "This section describes the step-by-step logic executed within the middleware.\n"
+  );
 
   docModel.integrationSteps.forEach((step) => {
-    lines.push(
-      `### ${step.order}. ${step.activityType || step.type} — ${
-        step.name || "Unnamed"
-      }`
-    );
+    lines.push(`### ${step.order}. ${step.name}`);
+    lines.push(`* **Component:** \`${step.activityType}\``);
 
+    if (step.adapter) {
+      lines.push(`* **Communication:** 🔌 Uses **${step.adapter}** adapter`);
+    }
+
+    // Behavior/Semantics
     if (step.semantic?.summary?.length) {
       step.semantic.summary.forEach((s) => {
-        lines.push(`- ${s}`);
+        lines.push(`* **Behavior:** ${s}`);
       });
     }
 
-    // Optional: show config only if meaningful
-    if (step.config) {
-      const hasConfig =
-        Object.keys(step.config.headers || {}).length > 0 ||
-        Object.keys(step.config.properties || {}).length > 0 ||
-        step.config.wrapContent;
+    // UPDATED CONFIGURATION LOGIC: Loop through all technical properties
+    if (step.config && Object.keys(step.config).length > 0) {
+      lines.push("");
+      lines.push("<details>");
+      lines.push("<summary>⚙️ View Technical Configuration</summary>");
+      lines.push("");
 
-      if (hasConfig) {
-        lines.push("");
-        lines.push("**Configuration Details:**");
+      // Loop through all generic config keys
+      Object.entries(step.config).forEach(([key, value]) => {
+        // Skip keys we've already handled or internal arrays
+        if (key === "headersDefined" || key === "propertiesDefined") return;
 
-        if (Object.keys(step.config.headers || {}).length > 0) {
-          lines.push("- Modified Headers:");
-          Object.entries(step.config.headers).forEach(([k, v]) => {
-            lines.push(`  - ${k}: ${v}`);
-          });
-        }
+        // Beautify key (e.g., resourcePath -> Resource Path)
+        const label = key
+          .replace(/([A-Z])/g, " $1")
+          .replace(/^./, (str) => str.toUpperCase());
+        lines.push(`- **${label}:** \`${value}\``);
+      });
 
-        if (Object.keys(step.config.properties || {}).length > 0) {
-          lines.push("- Modified Properties:");
-          Object.entries(step.config.properties).forEach(([k, v]) => {
-            lines.push(`  - ${k}: ${v}`);
-          });
-        }
-
-        if (step.config.wrapContent) {
-          lines.push("- Message body is wrapped");
-        }
+      // Handle the specialized tables from Content Modifiers
+      if (step.config.headersDefined) {
+        lines.push("\n**Headers Defined:**");
+        step.config.headersDefined.forEach((h) => lines.push(`- ${h}`));
       }
+
+      if (step.config.propertiesDefined) {
+        lines.push("\n**Properties Defined:**");
+        step.config.propertiesDefined.forEach((p) => lines.push(`- ${p}`));
+      }
+
+      lines.push("");
+      lines.push("</details>");
     }
 
-    lines.push("");
+    lines.push("\n---");
   });
 
-  // =========================================================
-  // Output
-  // =========================================================
   const outputText = lines.join("\n");
 
-  if (outputFormat === "console") {
-    console.log("\n==============================================\n");
-    console.log(outputText);
-    console.log("\n==============================================\n");
-  }
-
   if (outputFormat === "markdown") {
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-
+    if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
     const filePath = path.join(outputDir, "IntegrationFlowDocumentation.md");
     fs.writeFileSync(filePath, outputText, "utf8");
-
-    console.log(`📄 Documentation written to: ${filePath}`);
+    console.log(`✅ Documentation successfully generated at: ${filePath}`);
   }
 
   return outputText;
 }
 
-module.exports = {
-  generateDocumentation,
-};
+module.exports = { generateDocumentation };

@@ -1,394 +1,387 @@
 const { extractActivityConfig } = require("./activityConfig");
 
-// -------------------- Activity Type Matchers --------------------
-const ACTIVITY_TYPE_MATCHERS = [
-  // Participants
-  { match: "Sender", type: "Sender" },
-  { match: "Receiver", type: "Receiver" },
+const PALLET_REGISTRY = {
+  // --- Participants ---
+  Sender: {
+    name: "Sender",
+    icon: "🏢",
+    behavior: "Source system initiating the message.",
+  },
+  Receiver: {
+    name: "Receiver",
+    icon: "🎯",
+    behavior: "Target system receiving the message.",
+  },
 
-  // Process
-  { match: "IntegrationProcess", type: "Integration Process" },
-  { match: "LocalIntegrationProcess", type: "Local Integration Process" },
-  { match: "ErrorEventSubProcess", type: "Exception Subprocess" },
+  // --- Process ---
+  ErrorEventSubProcessTemplate: {
+    name: "Exception Subprocess",
+    behavior: "⚠️ Error handling: Catches and processes internal exceptions.",
+  },
+  IntegrationProcess: {
+    name: "Integration Process",
+    behavior: "⚙️ Main orchestration logic.",
+  },
+  LocalIntegrationProcess: {
+    name: "Local Integration Process",
+    behavior: "📦 Reusable local logic.",
+  },
 
-  // Events
-  { match: "StartEvent", type: "Start Event" },
-  { match: "MessageStartEvent", type: "Start Message" },
-  { match: "EndEvent", type: "End Event" },
-  { match: "MessageEndEvent", type: "End Message" },
-  { match: "ErrorStartEvent", type: "Error Start Event" },
-  { match: "ErrorEndEvent", type: "Error End Event" },
-  { match: "Escalation", type: "Escalation Event" },
-  { match: "Timer", type: "Timer Event" },
-  { match: "Terminate", type: "Terminate Event" },
+  // --- Events ---
+  EndEvent: { name: "End Event", behavior: "🛑 Message processing finishes." },
+  MessageEndEvent: {
+    name: "End Message",
+    behavior: "🛑 Finalizes the message processing.",
+  },
+  ErrorEndEvent: {
+    name: "Error End Event",
+    behavior: "🛑 Ends process with an error status.",
+  },
+  StartEvent: {
+    name: "Start Event",
+    behavior: "🏁 Message processing starts.",
+  },
+  MessageStartEvent: {
+    name: "Start Message",
+    behavior: "🏁 Entry point for the integration message.",
+  },
+  ErrorStartEvent: {
+    name: "Error Start Event",
+    behavior: "⚠️ Triggered when a specific error occurs.",
+  },
+  EscalationEndEvent: {
+    name: "Escalation End Event",
+    behavior: "⤴️ Triggers an escalation process.",
+  },
+  TerminateEvent: {
+    name: "Terminate Message",
+    behavior: "🚫 Immediately stops message processing.",
+  },
+  TimerStartEvent: {
+    name: "Timer",
+    behavior: "⏰ Triggered based on a schedule.",
+  },
 
-  // Mapping
-  { match: "MessageMapping", type: "Message Mapping" },
-  { match: "IDMapping", type: "ID Mapping" },
-  { match: "OperationMapping", type: "Operation Mapping" },
-  { match: "XSLT", type: "XSLT Mapping" },
+  // --- Mapping ---
+  IdMapping: {
+    name: "ID Mapping",
+    behavior: "🆔 Maps identifiers between systems.",
+  },
+  MessageMapping: {
+    name: "Message Mapping",
+    behavior: "🗺️ Graphical transformation of message structures.",
+  },
+  OperationMapping: {
+    name: "Operation Mapping",
+    behavior: "⚙️ Maps operations between services.",
+  },
+  XSLT: { name: "XSLT Mapping", behavior: "📜 XML transformation using XSLT." },
 
-  // Transformation
-  { match: "ContentModifier", type: "Content Modifier" },
-  { match: "Converter", type: "Converter" },
-  { match: "Encoder", type: "Encoder" },
-  { match: "Decoder", type: "Decoder" },
-  { match: "Filter", type: "Filter" },
-  { match: "MessageDigest", type: "Message Digest" },
-  { match: "XMLModifier", type: "XML Modifier" },
-  { match: "Groovy", type: "Groovy Script" },
-  { match: "JavaScript", type: "JavaScript Script" },
+  // --- Transformation & Converters ---
+  ContentModifier: {
+    name: "Content Modifier",
+    behavior: "📝 Modifies headers, properties, or body.",
+  },
+  CsvToXmlConverter: {
+    name: "CSV to XML Converter",
+    behavior: "🔄 Converts flat CSV to XML.",
+  },
+  EdiToXmlConverter: {
+    name: "EDI to XML Converter",
+    behavior: "🔄 Converts EDI structure to XML.",
+  },
+  JsonToXmlConverter: {
+    name: "JSON to XML Converter",
+    behavior: "🔄 Converts JSON payload to XML.",
+  },
+  XmlToCsvConverter: {
+    name: "XML to CSV Converter",
+    behavior: "🔄 Converts XML structure to flat CSV.",
+  },
+  XmlToEdiConverter: {
+    name: "XML to EDI Converter",
+    behavior: "🔄 Converts XML structure to EDI.",
+  },
+  XmlToJsonConverter: {
+    name: "XML to JSON Converter",
+    behavior: "🔄 Converts XML payload to JSON.",
+  },
 
-  // Calls
-  { match: "RequestReply", type: "Request Reply" },
-  { match: "Send", type: "Send" },
-  { match: "ContentEnricher", type: "Content Enricher" },
-  { match: "PollEnrich", type: "Poll Enrich" },
-  { match: "ProcessCall", type: "Process Call" },
+  // --- Decoders ---
+  Base64Decoder: {
+    name: "Base64 Decoder",
+    behavior: "🔓 Decodes Base64 encoded content.",
+  },
+  GZIPDecompression: {
+    name: "GZIP Decompression",
+    behavior: "🔓 Unpacks GZIP compressed data.",
+  },
+  MimeMultipartDecoder: {
+    name: "MIME Multipart Decoder",
+    behavior: "🔓 Decodes MIME multipart messages.",
+  },
+  ZipDecompression: {
+    name: "ZIP Decompression",
+    behavior: "🔓 Unpacks ZIP compressed data.",
+  },
 
-  // Routing
-  { match: "Router", type: "Router" },
-  { match: "Splitter", type: "Splitter" },
-  { match: "Aggregator", type: "Aggregator" },
-  { match: "Gather", type: "Gather" },
-  { match: "Join", type: "Join" },
-  { match: "Multicast", type: "Multicast" },
+  // --- Encoders ---
+  Base64Encoder: {
+    name: "Base64 Encoder",
+    behavior: "🔒 Encodes content into Base64.",
+  },
+  GZIPCompression: {
+    name: "GZIP Compression",
+    behavior: "🔒 Compresses data using GZIP.",
+  },
+  MimeMultipartEncoder: {
+    name: "MIME Multipart Encoder",
+    behavior: "🔒 Encodes content into MIME multipart.",
+  },
+  ZipCompression: {
+    name: "ZIP Compression",
+    behavior: "🔒 Packs data into ZIP format.",
+  },
 
-  // Security
-  { match: "Encrypt", type: "Encryptor" },
-  { match: "Decrypt", type: "Decryptor" },
-  { match: "Sign", type: "Signer" },
-  { match: "Verify", type: "Verifier" },
+  EdiExtractor: {
+    name: "EDI Extractor",
+    behavior: "🔍 Extracts EDI headers for routing.",
+  },
+  Filter: {
+    name: "Filter",
+    behavior: "🔍 Filters message based on XPath or conditions.",
+  },
+  MessageDigest: {
+    name: "Message Digest",
+    behavior: "🔑 Generates a cryptographic hash.",
+  },
+  GroovyScript: {
+    name: "Groovy Script",
+    behavior: "📜 Executes custom Groovy logic.",
+  },
+  JsScript: {
+    name: "JavaScript",
+    behavior: "📜 Executes custom JavaScript logic.",
+  },
+  XmlModifier: {
+    name: "XML Modifier",
+    behavior: "📝 Specific modifications for XML nodes.",
+  },
 
-  // Persistence
-  { match: "DataStore", type: "Data Store Operation" },
-  { match: "Persist", type: "Persist" },
-  { match: "WriteVariables", type: "Write Variables" },
+  // --- Calls ---
+  Enricher: {
+    name: "Content Enricher",
+    behavior: "➕ Adds data from an external system.",
+  },
+  PollEnrich: {
+    name: "Poll Enrich",
+    behavior: "🎣 Polls data from an external system.",
+  },
+  ExternalCall: {
+    name: "Request Reply",
+    behavior: "🔌 Synchronous call to an external service.",
+  },
+  Send: { name: "Send", behavior: "📤 Asynchronous send to a receiver." },
+  IdempotentProcessCall: {
+    name: "Idempotent Process Call",
+    behavior: "📞 Process call with duplicate check.",
+  },
+  LoopingProcess: {
+    name: "Looping Process Call",
+    behavior: "🔁 Executes a subprocess in a loop.",
+  },
+  ProcessCallElement: {
+    name: "Process Call",
+    behavior: "📞 Invokes a local integration process.",
+  },
 
-  // Validator
-  { match: "Validator", type: "Validator" },
-];
+  // --- Routing ---
+  Aggregator: {
+    name: "Aggregator",
+    behavior: "📥 Combines multiple related messages.",
+  },
+  Gather: {
+    name: "Gather",
+    behavior: "📥 Combines messages from multiple paths.",
+  },
+  Join: { name: "Join", behavior: "🤝 Merges parallel paths." },
+  ParallelMulticast: {
+    name: "Parallel Multicast",
+    behavior: "🛤️ Sends message to multiple paths simultaneously.",
+  },
+  SequentialMulticast: {
+    name: "Sequential Multicast",
+    behavior: "🛤️ Sends message to multiple paths in order.",
+  },
+  ExclusiveGateway: {
+    name: "Router",
+    behavior: "🔀 Branches flow based on conditions.",
+  },
 
-// function resolveActivityType(activity)
+  // --- Splitters ---
+  EdiSplitter: { name: "EDI Splitter", behavior: "🔪 Splits EDI documents." },
+  GeneralSplitter: {
+    name: "General Splitter",
+    behavior: "🔪 Splits messages based on line breaks or tags.",
+  },
+  IdocSplitter: {
+    name: "IDOC Splitter",
+    behavior: "🔪 Splits IDOC structures.",
+  },
+  IteratingSplitter: {
+    name: "Iterating Splitter",
+    behavior: "🔪 Iterates over a list and splits.",
+  },
+  TarSplitter: {
+    name: "Tar Splitter",
+    behavior: "🔪 Extracts files from Tar archive.",
+  },
+  ZipSplitter: {
+    name: "Zip Splitter",
+    behavior: "🔪 Extracts files from Zip archive.",
+  },
+
+  // --- Security ---
+  PGPDecryptor: { name: "PGP Decryptor", behavior: "🔓 Decrypts PGP content." },
+  PKCS7Decryptor: {
+    name: "PKCS7 Decryptor",
+    behavior: "🔓 Decrypts PKCS7 content.",
+  },
+  PGPEncryptor: {
+    name: "PGP Encryptor",
+    behavior: "🔒 Encrypts content using PGP.",
+  },
+  PKCS7Encryptor: {
+    name: "PKCS7 Encryptor",
+    behavior: "🔒 Encrypts content using PKCS7.",
+  },
+  PKCS7Signer: {
+    name: "PKCS7 Signer",
+    behavior: "✍️ Signs message using PKCS7.",
+  },
+  SimpleSigner: {
+    name: "Simple Signer",
+    behavior: "✍️ Adds digital signature.",
+  },
+  XmlSigner: {
+    name: "XML Digital Signer",
+    behavior: "✍️ Adds XML digital signature.",
+  },
+  PKCS7Verifier: {
+    name: "PKCS7 Verifier",
+    behavior: "✅ Verifies PKCS7 signature.",
+  },
+  XmlVerifier: { name: "XML Verifier", behavior: "✅ Verifies XML signature." },
+
+  // --- Persistence ---
+  DataStore: {
+    name: "Data Store Operation",
+    behavior: "💾 Database operation (Write/Get/Delete).",
+  },
+  Persist: { name: "Persist", behavior: "💾 Stores message for later." },
+  WriteVariables: {
+    name: "Write Variables",
+    behavior: "💾 Stores values in variables.",
+  },
+
+  // --- Validator ---
+  EdiValidator: {
+    name: "EDI Validator",
+    behavior: "✅ Validates EDI structure.",
+  },
+  XmlValidator: {
+    name: "XML Validator",
+    behavior: "✅ Validates XML against XSD.",
+  },
+};
+
 function resolveActivityType(activity) {
-  // inspect extensionElements
-  // return "content modifier", "router", etc
-  const extensionElements = activity["bpmn2:extensionElements"];
-  if (!extensionElements) return "Unknown";
+  const props = activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
+  const propsArray = Array.isArray(props) ? props : [props];
 
-  const props = extensionElements["ifl:property"];
-  const propsArray = Array.isArray(props) ? props : props ? [props] : [];
+  const sapActivityType = propsArray.find(
+    (p) => p.key === "activityType"
+  )?.value;
+  const variant =
+    propsArray.find((p) => p.key === "cmdVariantUri")?.value || "";
+  const iflType = activity["ifl:type"];
 
-  // Look for known CPI Indicators
-  for (const p of propsArray) {
-    if (!p.key || !p.value) continue;
+  let lookupKey = sapActivityType || iflType;
 
-    for (const matcher of ACTIVITY_TYPE_MATCHERS) {
-      if (p.value.includes(matcher.match)) {
-        return matcher.type;
-      }
+  // --- DYNAMIC RESOLVER FOR SPLITTERS ---
+  if (sapActivityType === "Splitter") {
+    if (variant.includes("EdiSplitter")) lookupKey = "EdiSplitter";
+    else if (variant.includes("IdocSplitter")) lookupKey = "IdocSplitter";
+    else if (variant.includes("IteratingSplitter"))
+      lookupKey = "IteratingSplitter";
+    else if (variant.includes("TarSplitter")) lookupKey = "TarSplitter";
+    else if (variant.includes("ZipSplitter")) lookupKey = "ZipSplitter";
+    else lookupKey = "GeneralSplitter";
+  }
+
+  // --- DYNAMIC RESOLVER FOR CONTENT MODIFIER ---
+  if (sapActivityType === "Enricher") {
+    const version = propsArray.find((p) => p.key === "componentVersion")?.value;
+    if (
+      version === "1.5" ||
+      version === "1.6" ||
+      variant.includes("Modifier")
+    ) {
+      lookupKey = "ContentModifier";
     }
   }
 
-  return "Unknown";
+  // --- DYNAMIC RESOLVER FOR MULTICAST ---
+  if (variant.includes("SequentialMulticast"))
+    lookupKey = "SequentialMulticast";
+  if (variant.includes("ParallelMulticast")) lookupKey = "ParallelMulticast";
+
+  // --- DYNAMIC RESOLVER FOR SCRIPTS ---
+  if (sapActivityType === "Script") {
+    const subType = propsArray.find((p) => p.key === "subActivityType")?.value;
+    if (subType === "JsScript") lookupKey = "JsScript";
+    else lookupKey = "GroovyScript";
+  }
+
+  // Registry Match
+  if (PALLET_REGISTRY[lookupKey]) return PALLET_REGISTRY[lookupKey].name;
+
+  // Fallbacks
+  if (activity.id?.includes("StartEvent")) return "Start Event";
+  if (activity.id?.includes("EndEvent")) return "End Event";
+
+  return "General Step";
 }
 
-// -------------------- Micro Semantic Functions --------------------
+function extractActivitySemantics(activity, context = { flows: [] }) {
+  const typeName = resolveActivityType(activity);
+  const config = extractActivityConfig(activity) || {};
 
-// Participants
-function extractParticipantSemantic(activity) {
-  return {
-    role: activity.name,
-    summary: ["Integration participant defined"],
-  };
-}
+  const registryEntry = Object.values(PALLET_REGISTRY).find(
+    (e) => e.name === typeName
+  );
+  let behavior = registryEntry
+    ? registryEntry.behavior
+    : "Standard integration process step.";
 
-// Process
-function extractProcessSemantic(activity) {
-  return {
-    transactional: true,
-    summary: ["Process orchestration logic"],
-  };
-}
-
-function extractExceptionSubprocessSemantic(activity) {
-  return {
-    handleErrors: true,
-    summary: ["Error handling subprocess"],
-  };
-}
-
-// Events
-function extractEventSemantic(activity) {
-  return {
-    eventType: activity.name,
-    summary: ["Event control point"],
-  };
-}
-
-// Mapping
-function extractMappingSemantic(activity) {
-  return {
-    mappingType: activity.name,
-    summary: ["Message structure transformed"],
-  };
-}
-
-// Transformation
-function extractContentModifierSemantic(activity) {
-  const config = extractActivityConfig(activity);
-
-  return {
-    modifiesHeaders: Object.keys(config.headers).length > 0,
-    modifiesProperties: Object.keys(config.properties).length > 0,
-    wrapsMessage: config.wrapContent === true,
-    summary: [
-      Object.keys(config.headers).length > 0 ? "Headers modified" : null,
-      Object.keys(config.properties).length > 0 ? "Properties modified" : null,
-      config.wrapContent ? "Message body wrapped" : null,
-    ].filter(Boolean),
-  };
-}
-
-function extractConverterSemantic(activity) {
-  return {
-    convertsFormat: true,
-    summary: ["Payload format converted"],
-  };
-}
-
-function extractCodecSemantic(activity) {
-  return {
-    encodingApplied: true,
-    summary: ["Encoding or decoding applied"],
-  };
-}
-
-function extractFilterSemantic(activity) {
-  const props = activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
-  const propsArray = Array.isArray(props) ? props : [props];
-
-  const conditions = propsArray
-    .filter((p) => p.key?.toLowerCase().includes("condition"))
-    .map((p) => p.value);
-
-  return {
-    filtersMessage: conditions.length > 0,
-    conditions,
-    summary:
-      conditions.length > 0
-        ? [`Filters message based on ${conditions.length} condition(s)`]
-        : ["Message filtered with default behavior"],
-  };
-}
-
-function extractMessageDigestSemantic(activity) {
-  return {
-    generatesHash: true,
-    summary: ["Message digest generated"],
-  };
-}
-
-function extractXMLModifierSemantic(activity) {
-  return {
-    modifiesXML: true,
-    summary: ["XML structure modified"],
-  };
-}
-
-function extractScriptSemantic(activity) {
-  return {
-    scriptName: getIflProperty(activity, "script"),
-    summary: ["Custom script executed"],
-  };
-}
-
-// Calls
-function extractCallSemantic(activity) {
-  return {
-    externalInteraction: true,
-    summary: ["External or local system invoked"],
-  };
-}
-
-// Routing
-function extractRouterSemantic(activity) {
-  const props = activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
-  const propsArray = Array.isArray(props) ? props : [props];
-
-  const conditions = propsArray
-    .filter((p) => p.key?.toLowerCase().includes("condition"))
-    .map((p) => p.value);
-
-  return {
-    conditionalRouting: conditions.length > 0,
-    conditions,
-    summary:
-      conditions.length > 0
-        ? [`Routes message based on ${conditions.length} condition(s)`]
-        : ["Routes message using default path"],
-  };
-}
-
-function extractSplitterSemantic(activity) {
-  return {
-    splitsMessage: true,
-    summary: ["Message split into multiple parts"],
-  };
-}
-
-function extractAggregatorSemantic(activity) {
-  return {
-    aggregatesMessages: true,
-    summary: ["Messages aggregated"],
-  };
-}
-
-function extractGatherSemantic(activity) {
-  return {
-    gathersMessages: true,
-    summary: ["Multiple messages gathered"],
-  };
-}
-
-function extractJoinSemantic(activity) {
-  return {
-    joinsFlows: true,
-    summary: ["Parallel flows joined"],
-  };
-}
-
-function extractMulticastSemantic(activity) {
-  return {
-    multicasts: true,
-    summary: ["Message sent to multiple receivers"],
-  };
-}
-
-// Security
-function extractSecuritySemantic(activity) {
-  const props = activity["bpmn2:extensionElements"]?.["ifl:property"] || [];
-  const propsArray = Array.isArray(props) ? props : [props];
-
-  const secType = propsArray.find((p) => p.key === "type")?.value || "unknown";
-
-  return {
-    securityApplied: true,
-    securityType: secType,
-    summary: [`Security operation applied: ${secType}`],
-  };
-}
-
-// Persistence
-function extractPersistenceSemantic(activity) {
-  return {
-    persistsData: true,
-    summary: ["Data persisted or retrieved"],
-  };
-}
-
-// Validator
-function extractValidatorSemantic(activity) {
-  return {
-    validatesPayload: true,
-    summary: ["Payload validation performed"],
-  };
-}
-
-// -------------------- Activity Handlers --------------------
-const ACTIVITY_SEMANTIC_HANDLERS = {
-  // Participants
-  Sender: extractParticipantSemantic,
-  Receiver: extractParticipantSemantic,
-
-  // Process
-  "Integration Process": extractProcessSemantic,
-  "Local Integration Process": extractProcessSemantic,
-  "Exception Subprocess": extractExceptionSubprocessSemantic,
-
-  // Events
-  "Start Event": extractEventSemantic,
-  "Start Message": extractEventSemantic,
-  "End Event": extractEventSemantic,
-  "End Message": extractEventSemantic,
-  "Error Start Event": extractEventSemantic,
-  "Error End Event": extractEventSemantic,
-  "Escalation Event": extractEventSemantic,
-  "Timer Event": extractEventSemantic,
-  "Terminate Event": extractEventSemantic,
-
-  // Mapping
-  "Message Mapping": extractMappingSemantic,
-  "ID Mapping": extractMappingSemantic,
-  "Operation Mapping": extractMappingSemantic,
-  "XSLT Mapping": extractMappingSemantic,
-
-  // Transformation
-  "Content Modifier": extractContentModifierSemantic,
-  Converter: extractConverterSemantic,
-  Encoder: extractCodecSemantic,
-  Decoder: extractCodecSemantic,
-  Filter: extractFilterSemantic,
-  "Message Digest": extractMessageDigestSemantic,
-  "XML Modifier": extractXMLModifierSemantic,
-  "Groovy Script": extractScriptSemantic,
-  "JavaScript Script": extractScriptSemantic,
-
-  // Calls
-  "Request Reply": extractCallSemantic,
-  Send: extractCallSemantic,
-  "Content Enricher": extractCallSemantic,
-  "Poll Enrich": extractCallSemantic,
-  "Process Call": extractCallSemantic,
-
-  // Routing
-  Router: extractRouterSemantic,
-  Splitter: extractSplitterSemantic,
-  Aggregator: extractAggregatorSemantic,
-  Gather: extractGatherSemantic,
-  Join: extractJoinSemantic,
-  Multicast: extractMulticastSemantic,
-
-  // Security
-  Encryptor: extractSecuritySemantic,
-  Decryptor: extractSecuritySemantic,
-  Signer: extractSecuritySemantic,
-  Verifier: extractSecuritySemantic,
-
-  // Persistence
-  "Data Store Operation": extractPersistenceSemantic,
-  Persist: extractPersistenceSemantic,
-  "Write Variables": extractPersistenceSemantic,
-
-  // Validator
-  Validator: extractValidatorSemantic,
-};
-
-// -------------------- Main Extractor --------------------
-function extractActivitySemantics(activity, resolveActivityType) {
-  const activityType = resolveActivityType(activity);
-
-  const handler = ACTIVITY_SEMANTIC_HANDLERS[activityType];
-
-  if (!handler) {
-    return {
-      type: activityType,
-      semantic: {
-        summary: ["No detailed semantics extracted"],
-      },
-    };
+  // Logic for Router paths
+  if (typeName === "Router") {
+    const routes = (context.flows || [])
+      .filter((f) => f.sourceRef === activity.id)
+      .map(
+        (f) =>
+          `Path to ${f.targetName || f.targetRef}: ${
+            f["bpmn2:conditionExpression"]?._ || "Default"
+          }`
+      );
+    if (routes.length) behavior = `🔀 ${routes.join(" | ")}`;
   }
 
   return {
-    type: activityType,
-    semantic: handler(activity),
+    type: typeName,
+    config: config,
+    semantic: { summary: [behavior] },
   };
 }
 
-// -------------------- Exports --------------------
-module.exports = {
-  ACTIVITY_TYPE_MATCHERS,
-  ACTIVITY_SEMANTIC_HANDLERS,
-  resolveActivityType,
-  extractActivitySemantics,
-};
+module.exports = { extractActivitySemantics, resolveActivityType };
