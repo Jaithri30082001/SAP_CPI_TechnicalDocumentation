@@ -1,6 +1,6 @@
 #Store metainfo properties
-#Sat Jan 03 08:37:17 UTC 2026
-description=Fetch Billing Document Item details from SAP S/4 HANA system
+#Sat Jan 17 07:56:19 UTC 2026
+description=Creates Customer Return in SAP S/4 HANA system
 SAP-MarkedSAP2SAP=SAP_TO_SAP_INTEGRATION
-source=SAPS4HANA
-target=SAPComplaintHandling
+source=SAPComplaintHandling
+target=SAPS4HANA

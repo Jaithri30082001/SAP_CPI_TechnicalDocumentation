@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><parameters><parameter>
     <key/>
-    <name>Credential</name>
-    <type>xsd:string</type>
-    <isRequired>false</isRequired>
-    <constraint/>
-    <description/>
-    <additionalMetadata/>
-  </parameter><parameter>
-    <key/>
-    <name>RoleBased</name>
+    <name>role</name>
     <type>xsd:string</type>
     <isRequired>false</isRequired>
     <constraint/>
     <description/>
     <additionalMetadata>
-      <isCombobox>true</isCombobox>
-    </additionalMetadata>
-  </parameter><parameter>
-    <key/>
-    <name>Authentication</name>
-    <type>xsd:string</type>
-    <isRequired>false</isRequired>
-    <constraint/>
-    <description/>
-    <additionalMetadata>
-      <isCombobox>true</isCombobox>
+      <Configured>true</Configured>
     </additionalMetadata>
   </parameter><parameter>
     <key/>
@@ -41,33 +23,9 @@
     <isRequired>false</isRequired>
     <constraint/>
     <description/>
-    <additionalMetadata/>
-  </parameter><parameter>
-    <key/>
-    <name>Destination Credential</name>
-    <type>xsd:string</type>
-    <isRequired>false</isRequired>
-    <constraint/>
-    <description/>
-    <additionalMetadata/>
-  </parameter><parameter>
-    <key/>
-    <name>Authentication type</name>
-    <type>xsd:string</type>
-    <isRequired>false</isRequired>
-    <constraint/>
-    <description/>
     <additionalMetadata>
-      <isCombobox>true</isCombobox>
+      <Configured>true</Configured>
     </additionalMetadata>
-  </parameter><parameter>
-    <key/>
-    <name>custom_extension_enabled</name>
-    <type>xsd:string</type>
-    <isRequired>false</isRequired>
-    <constraint/>
-    <description/>
-    <additionalMetadata/>
   </parameter><parameter>
     <key/>
     <name>Destination Address</name>
@@ -75,10 +33,20 @@
     <isRequired>false</isRequired>
     <constraint/>
     <description/>
+    <additionalMetadata>
+      <Configured>true</Configured>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>preCall</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
     <additionalMetadata/>
   </parameter><parameter>
     <key/>
-    <name>Authentication Type</name>
+    <name>Authorization</name>
     <type>xsd:string</type>
     <isRequired>false</isRequired>
     <constraint/>
@@ -88,7 +56,18 @@
     </additionalMetadata>
   </parameter><parameter>
     <key/>
-    <name>User Role</name>
+    <name>Authentication</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <Configured>true</Configured>
+      <isCombobox>true</isCombobox>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>custom_pre_extension_enabled</name>
     <type>xsd:string</type>
     <isRequired>false</isRequired>
     <constraint/>
@@ -96,7 +75,27 @@
     <additionalMetadata/>
   </parameter><parameter>
     <key/>
-    <name>use_external_document</name>
+    <name>Specify credential</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <Configured>true</Configured>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>Destination Credential</name>
+    <type>xsd:string</type>
+    <isRequired>false</isRequired>
+    <constraint/>
+    <description/>
+    <additionalMetadata>
+      <Configured>true</Configured>
+    </additionalMetadata>
+  </parameter><parameter>
+    <key/>
+    <name>custom_post_extension_enabled</name>
     <type>xsd:string</type>
     <isRequired>false</isRequired>
     <constraint/>
@@ -104,10 +103,12 @@
     <additionalMetadata/>
   </parameter><parameter>
     <key/>
-    <name>callExternalService</name>
-    <type>xsd:string</type>
+    <name>CSRFProtected</name>
+    <type>xsd:boolean</type>
     <isRequired>false</isRequired>
     <constraint/>
     <description/>
-    <additionalMetadata/>
-  </parameter><param_references><reference attribute_category="ExternalDocumentExit" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="callExternalService"/><reference attribute_category="GetCount.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.13.2/attrId::authenticationMethod" attribute_uilabel="Authentication" param_key="Authentication"/><reference attribute_category="GetCount.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.13.2/attrId::credentialName" attribute_uilabel="Credential Name" param_key="Credential Name"/><reference attribute_category="DestinationService.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.11.0/attrId::credentialName" attribute_uilabel="Credential Name" param_key="Destination Credential"/><reference attribute_category="DestinationService" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.11.0/attrId::httpAddressWithoutQuery" attribute_uilabel="Address" param_key="Destination Address"/><reference attribute_category="PostExitReceiver" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="postCall"/><reference attribute_category="Receiver.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.20.2/attrId::authenticationMethod" attribute_uilabel="Authentication" param_key="Authentication type"/><reference attribute_category="Receiver.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.20.2/attrId::alias" attribute_uilabel="Credential Name" param_key="Credential"/><reference attribute_category="Sender" attribute_id="/attrId::userRole" attribute_uilabel="" param_key="User Role"/><reference attribute_category="Sender" attribute_id="/attrId::senderAuthType" attribute_uilabel="" param_key="RoleBased"/></param_references></parameters>
+    <additionalMetadata>
+      <isCombobox>false</isCombobox>
+    </additionalMetadata>
+  </parameter><param_references><reference attribute_category="ReceiverGet.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.22.0/attrId::authenticationMethod" attribute_uilabel="Authentication" param_key="Authentication"/><reference attribute_category="ReceiverGet.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.22.0/attrId::alias" attribute_uilabel="Credential Name" param_key="Specify credential"/><reference attribute_category="DestinationService.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.11.0/attrId::credentialName" attribute_uilabel="Credential Name" param_key="Destination Credential"/><reference attribute_category="DestinationService" attribute_id="ctype::AdapterVariant/cname::HTTP/tp::HTTP/mp::None/direction::Receiver/version::1.11.0/attrId::httpAddressWithoutQuery" attribute_uilabel="Address" param_key="Destination Address"/><reference attribute_category="PREEXITReceiver" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="preCall"/><reference attribute_category="Receiver.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.20.2/attrId::authenticationMethod" attribute_uilabel="Authentication" param_key="Authentication"/><reference attribute_category="Receiver.Receiver.Auth" attribute_id="ctype::AdapterVariant/cname::HCIOData/tp::HTTP/mp::OData V2/direction::Receiver/version::1.20.2/attrId::alias" attribute_uilabel="Credential Name" param_key="Credential Name"/><reference attribute_category="Sender" attribute_id="/attrId::xsrfProtection" attribute_uilabel="" param_key="CSRFProtected"/><reference attribute_category="Sender" attribute_id="/attrId::userRole" attribute_uilabel="" param_key="role"/><reference attribute_category="Sender" attribute_id="/attrId::senderAuthType" attribute_uilabel="" param_key="Authorization"/><reference attribute_category="POSTEXITReceiver" attribute_id="ctype::Adapter/cname::ProcessDirect/vendor::SAP/version::1.1.2/attrId::address" attribute_uilabel="Address" param_key="postCall"/></param_references></parameters>

@@ -1,15 +1,14 @@
 #
-#Sun Apr 06 13:18:27 UTC 2025
-Credential=
-RoleBased=RoleBased
+#Wed Nov 05 17:12:53 UTC 2025
+role=Specify the role
 postCall=Specify Extended CPI Address
 Credential\ Name=
-custom_extension_enabled=false
-Authentication\ type=SAP_PP
 Destination\ Address=https\://<Destination Service URL>
-User\ Role=Specify the role
-use_external_document=false
-callExternalService=Specify Extended CPI Address
-Authentication=Principal Propagation
-Destination\ Credential=Define Value
-Authentication\ Type=None
+CSRFProtected=0
+preCall=Specify Extended CPI Address
+Authorization=RoleBased
+Authentication=SAP_PP
+custom_pre_extension_enabled=false
+Specify\ credential=
+Destination\ Credential=Specify the destination credential
+custom_post_extension_enabled=false
