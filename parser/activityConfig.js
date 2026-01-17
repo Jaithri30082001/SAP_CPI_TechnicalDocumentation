@@ -56,3 +56,5 @@ function parseCpiTable(xmlString) {
 }
 
 module.exports = { extractActivityConfig };
+// 👆🏼THE FINAL CODE
+//////////////////////////////////////////////////////////////////////////////

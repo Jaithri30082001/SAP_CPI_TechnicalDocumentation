@@ -25,7 +25,7 @@ parser.parseString(xmlData, (err, result) => {
   const definitions = result["bpmn2:definitions"];
   const processes = toArray(definitions["bpmn2:process"]);
 
-  // --- NEW: Map Process IDs to Human Names (e.g., Process_1 -> "Integration Process") ---
+  // 1. Map Process Names
   const processNameMap = {};
   const participants = toArray(
     definitions["bpmn2:collaboration"]?.["bpmn2:participant"]
@@ -35,7 +35,7 @@ parser.parseString(xmlData, (err, result) => {
       processNameMap[p.processRef] = p.name || "Unnamed Process";
   });
 
-  // 1. Map Adapters
+  // 2. Map Adapters
   const adapterMap = {};
   const messageFlows = toArray(
     definitions["bpmn2:collaboration"]?.["bpmn2:messageFlow"]
@@ -48,48 +48,51 @@ parser.parseString(xmlData, (err, result) => {
     if (flow.targetRef) adapterMap[flow.targetRef] = adapter;
   });
 
-  // 2. Extract Elements with Process Context
   let allElements = [];
   const allFlows = [];
 
+  // 3. Deep Scanning (including Exception Subprocesses)
   processes.forEach((proc) => {
-    const procId = proc.id;
-    const procName = processNameMap[procId] || "Main Process";
-
+    const procName = processNameMap[proc.id] || "Main Process";
     allFlows.push(...toArray(proc["bpmn2:sequenceFlow"]));
 
-    const tags = [
-      { tag: "bpmn2:startEvent", cat: "Start Event" },
-      { tag: "bpmn2:endEvent", cat: "End Event" },
-      { tag: "bpmn2:callActivity", cat: "Activity" },
-      { tag: "bpmn2:serviceTask", cat: "Service Task" },
-      { tag: "bpmn2:exclusiveGateway", cat: "Router" },
-      { tag: "bpmn2:subProcess", cat: "Sub-Process" },
-      { tag: "bpmn2:intermediateCatchEvent", cat: "Intermediate Event" },
-      // --- ADD THESE MISSING COMPONENTS ---
-      { tag: "ifl:messageMapping", cat: "Message Mapping" },
-      { tag: "ifl:jsonToXmlConverter", cat: "JSON to XML Converter" },
-      { tag: "ifl:xmlToJsonConverter", cat: "XML to JSON Converter" },
-    ];
+    const scanElements = (container, parentName) => {
+      Object.keys(container).forEach((key) => {
+        if (key === "bpmn2:sequenceFlow" || key === "bpmn2:laneSet") return;
 
-    tags.forEach((t) => {
-      toArray(proc[t.tag]).forEach((el) => {
-        allElements.push({
-          ...el,
-          internalCategory: t.cat,
-          parentProcess: procName, // <--- Tagging the location
+        const items = toArray(container[key]);
+        items.forEach((item) => {
+          if (item.id && typeof item === "object") {
+            const semantics = extractActivitySemantics(item, { nameMap: {} });
+            allElements.push({
+              ...item,
+              internalCategory: semantics.type || key.split(":")[1] || key,
+              parentProcess: parentName,
+            });
+
+            // IF SUBPROCESS: DYNAMICALLY SCAN INSIDE
+            if (key === "bpmn2:subProcess" || key === "bpmn2:adHocSubProcess") {
+              scanElements(
+                item,
+                `${parentName} (Nested: ${item.name || item.id})`
+              );
+              // Also grab internal flows
+              allFlows.push(...toArray(item["bpmn2:sequenceFlow"]));
+            }
+          }
         });
       });
-    });
+    };
+
+    scanElements(proc, procName);
   });
 
   const nameMap = Object.fromEntries(
     allElements.map((el) => [el.id, el.name || el.id])
   );
-
-  // 3. APPLY LOGICAL ORDERING
   const finalSequence = getLogicalOrder(allElements, allFlows);
 
+  // 4. Build Document Model
   const documentationModel = {
     metadata: {
       iflowName: path.basename(iflwPath),
@@ -98,23 +101,34 @@ parser.parseString(xmlData, (err, result) => {
     participants: participants.map((p) => ({
       name: p.name || "External System",
     })),
-    integrationSteps: finalSequence.map((el, index) => {
-      const semantics = extractActivitySemantics(el, { nameMap });
-      return {
+    sections: [],
+  };
+
+  const grouped = {};
+  finalSequence.forEach((step) => {
+    if (!grouped[step.parentProcess]) grouped[step.parentProcess] = [];
+    grouped[step.parentProcess].push(step);
+  });
+
+  Object.keys(grouped).forEach((procName) => {
+    documentationModel.sections.push({
+      processName: procName,
+      steps: grouped[procName].map((el, index) => ({
         order: index + 1,
         id: el.id,
-        name: el.name || `Unnamed ${el.internalCategory}`,
-        parentProcess: el.parentProcess, // <--- Passing it to the model
-        activityType: semantics.type || el.internalCategory,
-        semantic: semantics.semantic,
+        name: el.name || nameMap[el.id] || el.id,
+        activityType: el.internalCategory,
+        semantic: extractActivitySemantics(el, { nameMap }).semantic,
         adapter: adapterMap[el.id] || null,
         config: extractActivityConfig(el),
-      };
-    }),
-  };
+      })),
+    });
+  });
 
   generateDocumentation(documentationModel, allFlows, allElements, {
     outputDir,
   });
-  console.log(`✅ Documentation Generated for ${allElements.length} elements.`);
+  console.log(`🚀 Documentation generated successfully!`);
 });
+// 👆🏼THE FINAL CODE
+/////////////////////////////////////////////////////////////////////////////

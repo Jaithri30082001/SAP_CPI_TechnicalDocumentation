@@ -1,43 +1,70 @@
-/**
- * flowOrder.js
- */
 function getLogicalOrder(allElements, allFlows) {
-  // 1. Separate Main Process elements from Local Processes
-  // We assume "Integration Process" is the primary one
-  const mainProcessSteps = allElements.filter(
-    (el) => el.parentProcess === "Integration Process"
-  );
-  const otherSteps = allElements.filter(
-    (el) => el.parentProcess !== "Integration Process"
-  );
-
-  const orderedMain = [];
+  const ordered = [];
   const visited = new Set();
 
-  // 2. Find the head of the Main Process
-  const allTargetRefs = new Set(allFlows.map((f) => f.targetRef));
-  let current = mainProcessSteps.find(
-    (el) => el.internalCategory === "Start Event" && !allTargetRefs.has(el.id)
-  );
+  // 1. Identify all unique processes (Main, Locals, and SubProcesses)
+  const processes = [...new Set(allElements.map((el) => el.parentProcess))];
 
-  // 3. Walk the Main Process Path
-  let safety = 0;
-  while (current && !visited.has(current.id) && safety < 100) {
-    orderedMain.push(current);
-    visited.add(current.id);
-    safety++;
+  // Sort processes so "Integration Process" (Main) always leads
+  processes.sort((a, b) => {
+    if (a === "Integration Process") return -1;
+    if (b === "Integration Process") return 1;
+    return 0;
+  });
 
-    const flow = allFlows.find((f) => f.sourceRef === current.id);
-    current = flow
-      ? mainProcessSteps.find((el) => el.id === flow.targetRef)
-      : null;
-  }
+  processes.forEach((procName) => {
+    const procElements = allElements.filter(
+      (el) => el.parentProcess === procName
+    );
 
-  // 4. Catch any main steps we missed (side branches)
-  const missedMain = mainProcessSteps.filter((el) => !visited.has(el.id));
+    // 2. Find the Start Node for this specific process/subprocess
+    const startNode = procElements.find(
+      (el) =>
+        el.internalCategory === "Start Event" ||
+        el.internalCategory === "StartEvent"
+    );
 
-  // 5. Final order: Ordered Main -> Missed Main -> Local Processes
-  return [...orderedMain, ...missedMain, ...otherSteps];
+    if (!startNode) return;
+    const stack = [startNode];
+
+    while (stack.length > 0) {
+      let current = stack.pop();
+      if (!current || visited.has(current.id)) continue;
+
+      ordered.push(current);
+      visited.add(current.id);
+
+      // 3. Find outgoing paths belonging to this process
+      const outgoing = allFlows.filter((f) => f.sourceRef === current.id);
+
+      // --- BUSINESS-FIRST SORTING ---
+      // We sort so that "End Events" are pushed to the stack FIRST.
+      // Since it's a stack (LIFO), the End Event will be popped LAST.
+      outgoing.sort((a, b) => {
+        const targetA = allElements.find((el) => el.id === a.targetRef);
+        const targetB = allElements.find((el) => el.id === b.targetRef);
+
+        const isEndA = targetA?.internalCategory?.toLowerCase().includes("end");
+        const isEndB = targetB?.internalCategory?.toLowerCase().includes("end");
+
+        if (isEndA && !isEndB) return -1;
+        if (!isEndA && isEndB) return 1;
+        return 0;
+      });
+
+      outgoing.forEach((flow) => {
+        const target = allElements.find((el) => el.id === flow.targetRef);
+        if (target && !visited.has(target.id)) {
+          stack.push(target);
+        }
+      });
+    }
+  });
+
+  // 4. Catch orphans (anything missed by flow lines)
+  const remaining = allElements.filter((el) => !visited.has(el.id));
+  return [...ordered, ...remaining];
 }
 
 module.exports = { getLogicalOrder };
+// 👆🏼THE FINAL CODE

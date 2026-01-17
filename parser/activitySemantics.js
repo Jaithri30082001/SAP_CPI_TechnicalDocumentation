@@ -385,3 +385,6 @@ function extractActivitySemantics(activity, context = { flows: [] }) {
 }
 
 module.exports = { extractActivitySemantics, resolveActivityType };
+// 👆🏼THE FINAL CODE
+//////////////////////////////////////
+//////////////////////////////////////
